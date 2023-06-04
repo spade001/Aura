@@ -1,0 +1,218 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Order Information</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/dash">Home</a></li>
+                <li class="breadcrumb-item"></li><a href="/admin/ViewOrders">View Orders/</a></li>
+                <li class="breadcrumb-item active">Order Information <i class="bi bi-truck"></i></li>
+            </ol>
+        </nav>
+        <div class="ps-10">
+            <button class="btn btn-sm btn-danger " onclick="exportToPDF()">Download <i
+                    class="bi bi-filetype-pdf"></i></button>
+        </div>
+    </div><!-- End Page Title -->
+
+
+
+    <!-- Main Container  -->
+    <div class="main-container container" id="invoice">
+
+
+        <div class="row">
+            <!--Middle Part Start-->
+            <div id="content" class="col-sm-12">
+                <h3 class="title"> </h3>
+
+                <table class="table table-bordered table-hover" >
+                    <thead>
+                        <tr>
+                            <td colspan="2" class="text-left">Order Details</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="width: 50%;" class="text-left"> <b>Order ID: #</b> {{orderDetails._id}}
+                                <br>
+                                <b>Date Added:</b> 20/06/2016
+                            </td>
+                            <td style="width: 50%;" class="text-left"> <b>Payment Method:</b>
+                                {{orderDetails.payment_method}}
+                                <br>
+                                <b>Shipping Method:</b> Free Delivery <br>
+                                {{#isEqual orderDetails.status 'Cancelled'}}
+                                <h1>Cancelled</h1>
+                                {{/isEqual}}
+                                {{#isEqual orderDetails.status 'Shipped'}}
+                                <h1>Shipped</h1>
+                                {{/isEqual}}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <td style="width: 50%; vertical-align: top;" class="text-left"><b>Shipping Address</b> </td>
+                            <td style="width: 50%; vertical-align: top;" class="text-left"><b>Delivery Note</b> </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="text-left">{{orderDetails.deliveryDetails.Name}}
+                                <br>{{orderDetails.deliveryDetails.HouseNo}}
+                                <br>{{orderDetails.deliveryDetails.Street}}
+                                <br>{{orderDetails.deliveryDetails.TownCity}} {{orderDetails.deliveryDetails.PostCode}}
+                                <br>{{orderDetails.deliveryDetails.State}} {{orderDetails.deliveryDetails.Country}}
+                            </td>
+                            <td class="text-left">
+                                {{orderDetails.deliveryDetails.message}}
+
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover " id="myTable">
+                        <thead>
+                            <tr>
+                                <td class="text-left ">#</td>
+                                <td class="text-left "><b>Product Name</b> </td>
+                                <td class="text-left "><b>Image</b> </td>
+                                <td class="text-left "><b>Brand </b> </td>
+                                {{!-- <td class="text-left "><b>Product Code</b> </td> --}}
+                                <td class="text-left "><b>Color</b> </td>
+                                <td class="text-right "><b> Qty</b></td>
+                                <td class="text-right "><b>Status</b></td>
+                                <td class="text-right "><b>Price</b> </td>
+                                <td class="text-right "><b>Total</b> </td>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each orderProductsDetails}}
+                            <tr>
+                                <td class="text-left create_index"></td>
+                                <td class="text-left">{{this.cartDetails.product.title}} </td>
+                                <td class="text-left "><img height="50"
+                                        src="/images/product-img/{{this.cartDetails.product.image1}} "></td>
+                                <td class="text-left">{{this.cartDetails.product.brand}} </td>
+                                {{!-- 7 --}}
+                                <td class="text-left ">{{this.cartDetails.product.color}}</td>
+                                <td class="text-right">{{this.cartDetails.quantity}}</td>
+                                <td class="text-right">
+
+                                    <select onchange="changeStatus('{{this.cartDetails.item}}','{{this.orderId}}')"
+                                        name="orderstatus" id="{{this.cartDetails.item}}" class="form-select"
+                                        id="floatingSelect">
+                                        <option id="selected" selected value="{{this.cartDetails.status}}">
+                                            {{this.cartDetails.status}}</option>
+
+
+
+                                        {{#isEqual this.cartDetails.status 'Placed'}}
+                                        <option id="shipped" value="Shipped">Shipped</option>
+                                        <option id="OnTheWay" value="On the Way">On the Way</option>
+                                        <option id="Delivered" value="Delivered">Delivered</option>
+                                        <option id="Cancelled" value="Cancelled">Cancelled</option>
+                                        {{/isEqual}}
+                                        {{#isEqual this.cartDetails.status 'Shipped'}}
+                                        <option id="OnTheWay" value="On the Way">On the Way</option>
+                                        <option id="Delivered" value="Delivered">Delivered</option>
+                                        <option id="Cancelled" value="Cancelled">Cancelled</option>
+                                        {{/isEqual}}
+                                        {{#isEqual this.cartDetails.status 'On the Way'}}
+                                        <option id="Delivered" value="Delivered">Delivered</option>
+                                        <option id="Cancelled" value="Cancelled">Cancelled</option>
+                                        {{/isEqual}}
+                                        {{#isEqual this.cartDetails.status 'Delivered'}}
+                                        {{/isEqual}}
+                                        {{#isEqual this.cartDetails.status 'Cancelled'}}
+                                        {{/isEqual}}
+                                        {{#isEqual this.cartDetails.status 'Returned'}}
+                                        {{/isEqual}}
+                                    </select>
+                                </td>
+                                <td class="text-right">{{this.cartDetails.product.offerPrice}}</td>
+                                <td class="text-right">{{this.cartDetails.productTotal}}</td>
+
+                            </tr>
+                            {{/each}}
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="7"></td>
+
+
+                                <td class="text-right"><b>Sub-Total</b>
+                                </td>
+                                <td class="text-right">{{orderDetails.totalAmount}}</td>
+
+                            </tr>
+                            <tr>
+
+                                <td colspan="7"></td>
+                                <td class="text-right">Coupon Applied<b></b>
+                                </td>
+                                <td class="text-right">- {{orderDetails.couponApplied}}</td>
+
+                            </tr>
+                            <tr>
+
+                                <td colspan="7"></td>
+                                <td class="text-right">Shipping Charges<b></b>
+                                </td>
+                                <td class="text-right">0</td>
+
+                            </tr>
+
+                            <tr>
+
+                                <td colspan="7"></td>
+                                <td class="text-right"><b>Total</b>
+                                </td>
+                                <td class="text-right">{{orderDetails.totalAmount}}</td>
+
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+
+
+
+            </div>
+            <!--Middle Part End-->
+
+        </div>
+    </div>
+    <!-- //Main Container -->
+
+
+
+
+</main><!-- End #main -->
+<script src="../assets/js/exportexcel.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+<script>
+    function exportToPDF() {
+        const element = document.getElementById('invoice');
+        element.style.width = '700px';
+        element.style.height = '900px';
+        let opt = {
+            margin: 10,
+            filename: 'Aura.pdf',
+            image: { type: 'jpeg', quality: 1 },
+            html2canvas: { scale: 1 },
+            jsPDF: { unit: 'mm', orientation: 'portrait' }
+
+        }
+        html2pdf().set(opt)
+            .from(element)
+            .save();
+
+    }
+
+</script>

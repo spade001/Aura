@@ -1,0 +1,713 @@
+/* for top bar home/ shop   etc*/
+
+
+
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+/* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+view products for users space !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
+.bodyStyle{
+  background-color: #fff;
+
+}
+
+
+*{
+  margin:0;
+  padding:0;
+  font-family:verdana;
+}
+.bgStyle{
+  background-position: right;
+  background-repeat:  no-repeat;
+  background-color: #1DA1F2;
+  background-attachment: fixed;
+  width: 100%;
+  height: 100vh;
+}
+
+
+
+/*==================================================================
+ header section
+  ===================================================================*/
+.nameDiv a{
+  grid-area:name;
+  margin-left: 4rem;
+  color: rgb(85, 253, 85);
+  font-family:'Roboto';
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 2em;
+  letter-spacing: 1px;
+}
+.styleNav a{
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #fcfffc;
+}
+.NavBar{
+  display: grid;
+  align-items: center;
+  grid-template-areas:"name nav input cart " ;
+  grid-template-columns: .1fr .5fr 1.2fr 400px ;
+  grid-template-rows: 100px;
+  background-color: rgba(0,0,0,0.1);
+}
+.NavBar nav li{
+  list-style: none;
+ 
+}
+.styleNav ul{
+  margin-bottom: 0;
+  margin-left: 0;
+  padding-left: 0;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+.listStyle{
+    display: none;
+}
+
+.cartDiv{
+  grid-area: cart;
+  display: flex;
+  justify-content: space-evenly;
+  justify-content: space-around;
+  align-items: center;
+  margin-right: 20px;
+}
+.smallCart{
+  display: none;
+}
+.cartDiv i{
+  font-size: 25px;
+  line-height: 2;
+  margin-left: 2px;
+}
+.cartDiv a,li{
+    text-decoration: none;
+    list-style-type: none;
+}
+
+.searchBar{
+  grid-area: input;
+  width: 100%;
+}
+.searchBar form{
+  display: flex;
+  align-items: center;
+}
+.searchIco{
+  width: 40px;
+}
+.searchBar input{
+  height: 34px;
+}
+.bgStyle .searchIco i{
+  font-size: 1.6rem;
+  
+}
+.searchIco a{
+  margin-left: 6px;
+  padding-top: 4px;
+ 
+}
+.profileDiv{
+  grid-area: profile;
+  margin-right: 4rem;
+ 
+}
+
+
+
+.styleNav a,.searchBar a,.cartDiv a,.profileDiv a {
+  font-family:'Roboto';
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  font-size: 1em;
+  letter-spacing: 1px;
+}
+
+.styleNav{
+  grid-area: nav;
+  margin-right: 1rem;
+}
+#checking{
+  display: none;
+}
+.menuIco{
+  display: none;
+}
+.styleNav a{
+  margin-left: 10px;
+}
+
+/*======================================================
+Making navbar responsive
+=========================================================*/
+@media(max-width:800px){
+.styleNav ul{
+  position: fixed;
+  top: 60px;
+  left: -100%;
+  margin-left: -100px;
+  background-color: rgba(0,0,0,0.9);
+  height: 620px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 400ms;
+  
+
+  
+}
+.listStyle{
+    display: unset;
+}
+
+.cartDiv{
+    display: none;
+}
+
+
+
+.styleNav li{
+  padding-left: 0px;
+  margin-left: 100px;
+
+}
+.styleNav li a{
+  font-size: 24px;
+}
+
+.NavBar{
+  display: flex;
+  height: 60px;
+  position: fixed;
+  top: 0%;
+  width: 100%;
+  background-color: #5b7f9e;
+  overflow: hidden;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 10;
+  
+}
+.bgStyle{
+
+  background-position: center;
+  background-attachment: scroll;
+  background-size: cover;
+  margin-top: -50px;
+  width: 100%;
+  height: 100%;
+  
+}
+.menuIco i{
+  color: #fff;
+  font-size: 30px;
+ 
+  
+}
+.styleNav{
+  display:block;
+  order: 1;
+
+}
+.menuIco{
+  display: block;
+}
+.nameDiv{
+  display: none;
+}
+/* .nameDiv{
+  order: 2;
+  padding-right: 10px;
+ margin-left: 0;
+ display: none;
+  
+} */
+.searchBar{
+  order: 2;
+}
+/* .cartDiv{
+  order: 4;
+  padding: 10px;
+} */
+.smallCart{
+  order: 3;
+ padding: 10px;
+  display: unset;
+}
+.smallCart i{
+  font-size: 24px;
+}
+#checking:checked ~ ul{
+  left: 0px;
+}
+.bi-list::before {
+  content: "\f479";
+  margin-top: 10px;
+  margin-left: 6px;
+}
+#checking:checked ~ label i::before{
+  content: '\F62A';
+  
+}
+.cart i{
+  font-size: 20px;
+}
+
+.bgStyle .nameDiv a{
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fcfffc;
+}
+}
+/*=====================================================
+ header section end
+  =====================================================*/
+
+
+/*=====================================================
+ Text over the image 
+ =====================================================*/
+.textSection{
+  display: grid;
+  gap: 10px;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr .5fr 1fr;
+  margin: 110px 0px 0px 90px;
+
+}
+.textStyle1{
+ grid-area: 1/1/2/2;
+}
+.textStyle1 h1{
+  font-size:4.8vw;
+  color: #ffff;
+  font-weight: 500;
+}
+.textStyle2{
+  grid-area: 2/1/3/2;
+
+}
+.textStyle2 h4{
+  font-weight: 600;
+  color: #ffff
+  
+}
+.textButton{
+  grid-area: 3/1/4/2;
+
+}
+/* =================================================
+Text over the image making responsive
+==================================================== */
+@media(max-width:800px){
+  .textSection{
+    display: block;
+    padding-top: 240px;
+    margin-left: 40px;
+    margin-right: 40px;
+    padding-bottom: 100px;
+    
+  }
+  .textButton{
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+  .textButton a{
+    margin-top: 20px;
+  }
+  .textStyle1 h1{
+    text-align: center;
+    font-size: 2.4em;
+    font-weight: bold;
+  }
+  .textStyle2 h4{
+    text-align: center;
+  }
+}
+@media(max-width:450px){
+  .textSection{
+    padding-top: 174px;
+    padding-bottom: 20px;
+    width: 100%;
+    margin-left: 0;
+    
+  }
+  .textStyle1 h1{
+    display: none;
+  }
+  .textStyle2 h4{
+    display: none;
+  }
+  .textButton{
+    padding-top: 20px;
+  }
+  .textButton a{
+    margin-top: 10px;
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+}
+/*=================================================
+Text over the image making responsive
+=================================================== */
+
+
+/*==============================================
+ Text over the image end
+ =============================================== */
+
+
+
+
+/*===================================================
+ offers div start
+ ===================================================*/
+.offerDiv{
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  grid-template-rows: 450px;
+  margin: 60px;
+  gap: 30px;
+}
+.offerDiv div{
+  display: flex;
+  flex-direction: column;
+  justify-content:end;
+  align-items: baseline;
+  padding: 40px;
+  transition: transform .2s;
+  color: #ffff;
+  background-size: cover;
+}
+.offerDiv div:hover{
+  transform: scale(1.06);
+}
+.offerSection h2{
+  display: flex;
+  justify-content: center;
+}
+.offerSection{
+  margin-top: 20px
+}
+
+/*===================================================================
+ making offer div responsive 
+ ====================================================================*/
+@media(max-width:800px){
+ 
+  .offerBg{
+    background-size: cover;
+    background-position: center ;
+  }
+  .offerSection{
+    width: 100%;
+    padding: 14px;
+    padding-top: 10px;
+  }
+
+  .offerDiv{
+    display: block;
+    width: 100%;
+    margin: 0;
+    
+  }
+ 
+.offerDiv div{
+  display: block;
+  margin-top: 20px;
+  height: 100%;
+  width: 100%;
+  padding: 10px;
+  padding-top: 140px;
+  pointer-events: none;
+
+ 
+}
+.offerDiv .btn{
+   padding: 10px;
+   width: 100%;
+
+}
+
+
+}
+
+ /*===================================================================
+ making offer div responsive 
+ ====================================================================*/
+
+
+/*===================================================================
+offers div end
+===================================================================== */
+
+
+
+
+
+/*=====================================================================
+ item div start 
+ ======================================================================*/
+/* .itemDiv{
+  display: grid;
+  grid-template-columns: repeat(5,1fr);
+  grid-template-rows: 300px 300px;
+  gap: 10px;
+  row-gap: 50px;
+} */
+.itemHeadr{
+  display: flex;
+  justify-content: center;
+}
+.itemDiv a{
+  list-style: none;
+  text-decoration: none;
+  color: #020202;
+}
+.itemSec{
+  margin: 20px;
+}
+.divImg{
+  
+  width: 100%;
+  height: 240px;
+
+}
+@media(max-width:400px){
+  .divImg{
+    height: 150px;
+  }
+}
+.divAbout{
+  width: 100%;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.divImg img{
+  width: 100%;
+  height:100%;
+}
+/*========================================================
+ item div end 
+ =========================================================*/
+
+
+/*========================================================
+view one particular product 
+==========================================================*/
+.viewProduct{
+  background-color: aqua;
+}
+.proLeft{
+  width: 60%;
+  padding-top: 10px;
+  padding-left: 20px;
+}
+.about{
+  background-color: #020202;
+  display: flex;
+  height: 100px;
+}
+.content{
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  grid-template-rows:20rem;
+  gap: 10px;;
+}
+.content div{
+  background-color: #1DA1F2
+}
+.description{
+  margin-top: 10px;
+  background-color: green;
+  height: 100px;
+}
+/*============================================
+view one particular product end 
+==============================================*/
+
+
+
+/*!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Home page for users space end 
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!*/
+
+/*======================================================
+button square style
+========================================================*/
+.textSection .btn , .offerSection .btn{
+  border-radius: 0;
+  height: 44px;
+  line-height: 28px;
+  border: 1px solid #fff;
+  
+}
+/*======================================================
+button square style end
+========================================================*/
+
+
+/* Cart Section */
+.cartTitle{
+  display: flex;
+  height: 80px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  border-bottom: 1px solid #E1E8EE;
+
+
+   
+}
+.cartImgstyle{
+  width: 8rem;
+  height: 6rem;
+}
+.cartImgstyle img{
+  width: 100%;
+  height: 100%;
+}
+.cartItems{
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.cartLine{
+  border-bottom: 1px solid #E1E8EE;
+  margin-top: 20px;
+}
+/* Cart Section End */
+
+
+
+
+
+
+
+
+
+
+
+
+
+.swalAddToCart-size {
+   width: 200px !important;
+}
+
+
+
+.menuBarTop {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+#name-error,
+#email-error,
+#phone-error,
+#password-error,
+#pw1-error,
+#confirm-error,
+#submit-error {
+    color: rgb(255, 47, 47);
+}
+
+form i {
+    margin-left: 500px;
+
+    cursor: pointer;
+}
+
+/* css for the otp screen starts here */
+/* body {                                      // hided because it affect whole site
+    background-color: red
+} */
+
+.height-100 {
+    height: 100vh
+}
+
+.card {
+    width: 400px;
+    border: none;
+    height: 300px;
+    box-shadow: 0px 5px 20px 0px #d2dae3;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center
+}
+
+.card h6 {
+    color: red;
+    font-size: 20px
+}
+
+.inputs input {
+    width: 40px;
+    height: 40px
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0
+}
+
+.card-2 {
+    background-color: #fff;
+    padding: 10px;
+    width: 350px;
+    height: 100px;
+    bottom: -50px;
+    left: 20px;
+    position: absolute;
+    border-radius: 5px
+}
+
+.card-2 .content {
+    margin-top: 50px
+}
+
+.card-2 .content a {
+    color: red
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border: 2px solid red
+}
+
+.validate {
+    border-radius: 20px;
+    height: 40px;
+    background-color: red;
+    border: 1px solid red;
+    width: 140px
+}
+/* css for the otp screen ends here */
+
+
+.buttonAdd{
+    display:inline-block;
+}

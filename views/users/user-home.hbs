@@ -1,0 +1,435 @@
+<section class="bgStyle" style="background-image: url(./images/coverImg/cover.jpg);">
+  <header class="NavBar">
+    <div class="nameDiv"><a class="nameStyle" href="/">Aura</a></div>
+    <nav class="styleNav">
+      <input type="checkbox" id="checking">
+      <label for="checking" class="menuIco"><i class="bi bi-list"></i></label>
+        <ul> 
+            <li class="listStyle listProfile">
+                     {{#if headerDetails.userName}}
+           <a href="/account"><i class="bi bi-person "></i><span
+                    style="font-size: small ;">{{headerDetails.userName}}</span></a>
+                   {{else}}
+                <a href="/account"><i class="bi bi-person "></i></a>
+                  {{/if}}
+            </li>
+            <li><a href="/viewAll">Products</a></li>
+            <li><a href="#orders">Orders</a></li>
+         <li class="listStyle">
+              {{#if headerDetails.wishlistCount}}
+                            <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
+                                <a href="/wishlist"><i class="bi bi-heart fa-sm"></i><span class="pro-count black"
+                                        id="wishList-count">{{headerDetails.wishlistCount}}</span></a>
+                            </div>
+                            {{else}}
+                            <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
+                                <a href="/wishlist"><i class="bi bi-heart fa-sm"></i><span
+                                        id="wishList-count"></span></a>
+                            </div>
+
+                            {{/if}}
+         </li>
+        </ul>
+    </nav>
+
+
+ 
+    <div class="searchBar">
+      <div class="">
+                        <div class="input-group md-form form-sm form-2 pl-0">
+                            <input id="searchBox" class="form-control my-0 py-1 red-border" type="text"
+                                onkeyup="search()" placeholder="Search" aria-label="Search">
+                            <div class="input-group-append">
+                                <button onclick="search2()" class="input-group-text red lighten-3 " id="basic-text1"><i
+                                        class="fas fa-search text-grey" aria-hidden="true"></i></button>
+                            </div>
+                        </div>
+                        <div class="col-11" id="drop" style="background-color: white; position: absolute; z-index: 10;">
+                        </div>
+                    </div>
+    </div>
+
+    <div class="smallCart">
+                   
+                            
+                            {{#if headerDetails.userName}}
+                            <div
+                                class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
+                              
+                    
+                                    <a href="/cart">
+                                     
+                                        {{!-- <a class="cart-active" href="#"> --}}
+
+                                            <i class="bi bi-cart3 fa-sm text-white"></i><span class="pro-count position-absolute start-10 translate-middle badge rounded-pill bg-dark"
+                                              {{#if headerDetails.cartProducts}}
+                                                id="cart-count">{{headerDetails.cartCount}}</span>
+            
+                                        {{/if}} 
+                                        </a>
+                            </div>
+
+                            {{else}}
+                            <div
+                                class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
+                                <a onclick="confirmLoginCart()">
+                                    <i class="bi bi-cart3 fa-sm text-white"></i>
+                                </a>
+                            </div>
+
+
+                            {{/if}}
+
+    </div>
+
+    <div class="cartDiv">
+
+           {{#if headerDetails.userName}}
+           <a href="/account"><i class="bi bi-person "></i><span
+                    style="font-size: small ;">{{headerDetails.userName}}</span></a>
+                   {{else}}
+                <a href="/account"><i class="bi bi-person "></i></a>
+                  {{/if}}
+
+         <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
+                 <a href="/account"><i class="bi bi-wallet2"></i></a>
+                      </div>
+                        <div>
+                         {{#if headerDetails.wishlistCount}}
+                            <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
+                                <a href="/wishlist"><i class="bi bi-heart fa-sm"></i><span class="pro-count black"
+                                        id="wishList-count">{{headerDetails.wishlistCount}}</span></a>
+                            </div>
+                            {{else}}
+                            <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
+                                <a href="/wishlist"><i class="bi bi-heart fa-sm"></i><span
+                                        id="wishList-count"></span></a>
+                            </div>
+
+                            {{/if}}
+
+                            </div>
+                            
+                            {{#if headerDetails.userName}}
+
+
+                            <div
+                                class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
+                              
+                    
+                                    <a href="/cart">
+                                     
+                                        {{!-- <a class="cart-active" href="#"> --}}
+
+                                            <i class="bi bi-cart3 fa-sm"></i><span class="pro-count black"
+                                              {{#if headerDetails.cartProducts}}
+                                                id="cart-count">{{headerDetails.cartCount}}</span>
+                                            <span class="cart-amount white"><i
+                                                    class="bi bi-currency-rupee"></i>{{headerDetails.total}}</span>
+                                        {{/if}} 
+                                        </a>
+                            </div>
+
+                            {{else}}
+                            <div
+                                class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
+                                <a onclick="confirmLoginCart()">
+                                    <i class="bi bi-cart3 fa-sm text-white"></i>
+                                </a>
+                            </div>
+
+
+                            {{/if}}
+
+                            
+                                    <li >
+                                        {{#if headerDetails.userName}}
+                                        <a  onclick="confirmLogOut()" class="text-white"> Log out </a>
+                                        {{else}}
+                                        <a href="/login-register" >Log In </a>
+                                        {{/if}}
+                                    </li>
+
+
+</div>
+
+  </header>
+
+    <!-- Text section -->
+    <section class="textSection">
+      <div class="textStyle1">
+        <h1 >Raining Offers For Hot Summer !</h1>
+      </div>
+      <div class="textStyle2">
+        <h4>25% off for summer</h4>
+      </div>
+       <div class="textButton">
+        <a href="/viewAll" class="btn btn-light btn-outline-dark">shop now</a>
+         <a href="/viewAll"  class="btn btn-outline-dark">Find more</a>
+        </div>
+
+</section>
+    <!-- text section end -->
+    </section>
+
+
+
+   <!-- offers section start -->
+    <section class="offerSection">
+      <h2>offers</h2>
+       <div class="offerDiv">
+          {{#each bannerTop_main}}
+         <div style="background-image: image-set('/images/banner-img/{{this.largeImg}}');" class="offerBg"><h3 class="text-white">{{this.bannerTitle}}</h3><p class="text-white">{{this.bannerDescription}}</p><a href="/viewAll" type="button"  class="btn btn-light btn-outline-dark">shop now</a></div>
+         {{/each }}  
+          </div>
+          
+    </section>
+
+
+
+<!-- offers section end -->
+
+
+
+ 
+{{!-- product category --}}
+<div class="product-categories-area pt-70 pb-70">
+    <div class="container">
+        <div class="section-title-btn-wrap mb-25">
+            <div class="section-title-8">
+                <h2>Shop by Categories</h2>
+            </div>
+            <div class="btn-style-9">
+                <a href="/viewAll">All Product</a>
+            </div>
+        </div>
+        <div class="section-wrap-1">
+            <div class="product-categories-slider-1 nav-style-3">
+                {{#each headerDetails.categories}}
+
+                <div class="product-plr-1">
+                    <div class="single-product-wrap">
+                        <div class="product-img product-img-border-transparent mb-15">
+                            <a href="/viewAll/{{this._id}}">
+                                <img src="/images/category-img/{{this.image}}" alt="">
+                            </a>
+                        </div>
+                        <div class="product-content-categories-2 product-content-orange text-center">
+                            <h5 class="font-width-dec"><a href="#">{{this.category}}</a></h5>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+             
+        
+
+
+
+{{!-- top deals --}}
+<div class="product-area pb-70">
+    <div class="container">
+        <div class="section-wrap-1">
+            <div class="section-title-deal-wrap mb-30">
+                <div class="section-title-8">
+                    <h2>Top Deals Discounts above 15%</h2>
+                </div>
+                <div class="timer-wrap-2 timer-wrap-2-hm10">
+                    <h4><i class=""></i> Buy now:</h4>
+
+                </div>
+            </div>
+            <div
+                class="product-slider-active-8 dot-style-2 dot-style-2-position-static dot-style-2-mrg-3 nav-style-5 nav-style-5-modify">
+                {{#each categoryProducts.topDiscounted}}
+                <div class="product-plr-1">
+                    <div class="single-product-wrap">
+                        <div class="product-img product-img-zoom mb-20">
+                            <a href="/details/{{this._id}}">
+                                <img src="/images/product-img/{{this.image1}}" alt="">
+                            </a>
+                            <span class="pro-badge left bg-red">-{{this.totalDiscount}}%</span>
+                        
+                        </div>
+                        <div class="product-content-wrap-3">
+                            <h3 class="mrg-none"><a class="orange" href="/details/{{this._id}}">{{this.title}}</a>
+                            </h3>
+                            <div class="product-rating-wrap-2">
+                                <div class="product-rating-4">
+                                    <i class="icon_star"></i>
+                                    <i class="icon_star"></i>
+                                    <i class="icon_star"></i>
+                                    <i class="icon_star"></i>
+                                    <i class="icon_star"></i>
+                                </div>
+                                <span>(4)</span>
+                            </div>
+                            <div class="product-price-4">
+                                <span class="new-price"><i class="bi bi-currency-rupee"></i> {{this.offerPrice}}</span>
+                                <span class="old-price"><i class="bi bi-currency-rupee"></i> {{this.MRP}}</span>
+                            </div>
+                            <div class="product-author">
+                                <span><a class="orange" href="#">{{this.brand}}</a></span>
+                            </div>
+                           
+                        </div>
+                        <div class="product-content-wrap-3 product-content-position-2 pro-position-2-padding-dec">
+                            <h3 class="mrg-none"><a class="orange" href="/details/{{this._id}}">{{this.title}}</a>
+                            </h3>
+                            <div class="product-rating-wrap-2">
+                                <div class="product-rating-4">
+                                    <i class="icon_star"></i>
+                                    <i class="icon_star"></i>
+                                    <i class="icon_star"></i>
+                                    <i class="icon_star"></i>
+                                    <i class="icon_star"></i>
+                                </div>
+                                <span>(4)</span>
+                            </div>
+                            <div class="product-price-4">
+                                <span class="new-price"><i class="bi bi-currency-rupee"></i> {{this.offerPrice}}</span>
+                                <span class="old-price"><i class="bi bi-currency-rupee"></i> {{this.MRP}}</span>
+                            </div>
+                            <div class="product-author">
+                                <span><a class="orange" href="#">{{this.brand}}</a></span>
+                            </div>
+                    
+                            <div class="pro-add-to-cart-2">
+                                <button onclick="addToCartDetails('{{this._id}}')" title="Add to Cart">Add To Cart</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{/each}}
+
+            </div>
+        </div>
+    </div>
+</div>
+{{!-- category sales --}}
+
+                      
+
+         
+
+
+
+
+
+           
+
+
+
+
+<script>
+    
+
+
+    function openNav() {
+        document.getElementById("mySidenav").style.width = "250px";
+    }
+
+    function closeNav() {
+        document.getElementById("mySidenav").style.width = "0";
+    }
+
+ function confirmLogOut(){
+        Swal.fire({
+            title: 'Log Out',
+            text: "Are You Sure ?",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Log Out'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                location.href = '/logOut'
+            }
+        })
+
+    }     
+
+  function addToCartDetails(proId) {
+        $.ajax({
+            url: '/add-to-cart/' + proId,
+            method: 'get',
+            success: (response) => {
+                if (response.status) {
+                    let count = $('#cart-count').html()
+                    count = parseInt(count) + 1
+                    $('#cart-count').html(count)
+
+                    Swal.fire({
+                        position: 'top-end',
+                        width: 300,
+                        height: 100,
+                        icon: 'success',
+
+                        text: "Item Added to Cart",
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    location.reload()
+                } else {
+                    Swal.fire({
+                        title: 'Please Login ',
+                        text: "Please Login to Add this Item Into Your Cart",
+                        icon: 'info',
+                        showCancelButton: true,
+                        confirmButtonColor: '#3085d6',
+                        cancelButtonColor: '#d33',
+                        confirmButtonText: 'Continue with Login'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            location.href = '/detailsVerify/' + proId
+                        }
+                    })
+                    // location.href = '/detailsVerify/' + proId
+                }
+
+
+    function confirmLoginCart() {
+        Swal.fire({
+            title: 'Please Login ',
+            text: "Please Login to view your Cart!",
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Continue with Login'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                location.href = '/cart'
+            }
+        })
+    }
+
+
+    function removeCartProduct(cartId, proId) {
+        $.ajax({
+            url: '/removeProduct',
+            data: {
+                cart: cartId,
+                product: proId
+            },
+            method: 'post',
+            success(response) {
+                Swal.fire(
+                    'Deleted!',
+                    'Your file has been deleted.',
+                    'success'
+                )
+                location.reload()
+            }
+
+        })
+
+    }
+
+</script>

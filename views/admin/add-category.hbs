@@ -1,0 +1,127 @@
+<style>
+    .imggmi {
+        display: none;
+    }
+</style>
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1><b><i class="bi bi-folder-plus"></i></b> Add Category </i></h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/dash">Home</a></li>
+                <li class="breadcrumb-item"><a href="/admin/product-category">Category Management</a> </li>
+                <li class="breadcrumb-item active">Add Category</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    {{#if categoryError}}
+    <div class="alert alert-danger alert-dismissible fade show " role="alert">
+        <i class="bi bi-exclamation-triangle me-1"></i>
+        {{categoryError}}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    {{/if}}
+    <section class="section">
+        <div class="row">
+            <div class="col-lg-6 ">
+
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">New Category</h5>
+
+                        <!-- Horizontal Form -->
+                        <form action="/admin/addNewCategory" method="post" enctype="multipart/form-data">
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-4 col-form-label">Category Name</label>
+                                <div class="col-sm-8">
+                                    <input type="text" name="category" class="form-control" id="inputText">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-4 col-form-label">Category Discount %</label>
+                                <div class="col-sm-2">
+                                    <input type="number" name="categoryDiscount" class="form-control" id="inputText">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputEmail3" class="col-sm-4 col-form-label">Description</label>
+                                <div class="col-sm-8">
+
+                                    <textarea name="Description" rows="5" class="form-control"
+                                        id="inputText"></textarea>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="inputNumber" class="col-sm-4 col-form-label">Image Upload</label>
+                                <div class="col-sm-8">
+                                    <input type="file" class="form-control" name="image" accept="image/*" required>
+                                </div>
+                            </div>
+
+                            <div class="text-center">
+                                <a class="btn btn-secondary btn-sm" onclick="history.back()">Cancel</a>
+                                <button type="reset" class="btn btn-danger btn-sm">Reset</button>
+                                <button type="submit" class="btn btn-success btn-sm">Submit</button>
+                            </div>
+                        </form><!-- End Horizontal Form -->
+
+                    </div>
+                </div>
+
+
+
+            </div>
+
+
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+
+<script>
+    const imagebox1 = document.getElementById('screen1')
+    const crop_btn1 = document.getElementById('crop-1')
+    const input1 = document.getElementById('imgFile1')
+    document.getElementById("submitBtn").disabled = false;
+
+    input1.addEventListener('change', () => {
+        const img_data1 = input1.files[0]
+        const url1 = URL.createObjectURL(img_data1)
+        imagebox1.innerHTML = `<img src="${url1}" id="img1" style="width:100%;">`
+        const img1 = document.getElementById('img1')
+        document.getElementById("submitBtn").disabled = true;
+        document.getElementById('screen1').style.display = 'block'
+        document.getElementById('crop-1').style.display = 'block'
+
+
+        const cropper1 = new Cropper(img1, {
+            autoCropArea: 1,
+            viewMode: 1,
+            scalable: false,
+            zoomable: false,
+            movable: false,
+            minCropBoxWidth: 50,
+            minCropBoxHeight: 50,
+            aspectRatio: 1 / 1,
+        })
+
+        crop_btn1.addEventListener('click', () => {
+
+            cropper1.getCroppedCanvas().toBlob((blob) => {
+                let fileInputElement1 = document.getElementById('imgFile1');
+                let file1 = new File([blob], img_data1.name, { type: "image/*", lastModified: new Date().getTime() });
+                let container1 = new DataTransfer();
+                container1.items.add(file1);
+                fileInputElement1.files = container1.files;
+                document.getElementById('image-1').src = URL.createObjectURL(fileInputElement1.files[0])
+                document.getElementById('screen1').style.display = 'none'
+                document.getElementById('crop-1').style.display = 'none'
+                document.getElementById("submitBtn").disabled = false;
+                document.getElementById('image-1').style.display = 'block'
+            })
+        })
+
+    })
+</script>

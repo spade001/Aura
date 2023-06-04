@@ -1,0 +1,95 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+
+        <h1>Category </h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/dash">Home</a></li>
+                <li class="breadcrumb-item"><a href="/admin/product-category">Category Management</a> </li>
+                <li class="breadcrumb-item active">View Category</li>
+            </ol>
+            <a href="/admin/add-category" type="button" class="btn btn-success "> <i class="bi bi-check-circle"></i> Add
+                New</a>
+
+        </nav>
+    </div><!-- End Page Title -->
+
+    <table class="table table-bordered  " id="myTable">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Image</th>
+                <th scope="col">Description</th>
+                <th scope="col">Category Offer</th>
+                <th scope="col">Action</th>
+
+
+
+            </tr>
+        </thead>
+        <tbody>
+            {{#each category}}
+            <tr>
+                <th scope="row" class="create_index"></th>
+                <td scope="row">{{this.category}}</td>
+                <td scope="row"><img src="/images/category-img/{{this.image}}" style="width: 100px" alt=""></td>
+                <td scope="row">{{this.Description}}</td>
+                <td scope="row">{{this.categoryDiscount}} %</td>
+                <td><a href="/admin/edit-category/{{this._id}}" class="btn btn-warning btn-sm "> <i
+                            class="bi bi-pencil-square"></i></a>
+                    <button onclick="deleteCategory('{{this._id}}')" class="btn btn-danger btn-sm"> <i
+                            class="bi bi-trash3"></i></button>
+                </td>
+            </tr>
+            {{/each}}
+
+
+
+        </tbody>
+    </table>
+
+
+
+
+</main>
+
+<script>
+    function deleteCategory(Id) {
+        
+        Swal.fire({
+            text: "Are You really want to delete this category !",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/admin/delete-category/' + Id,
+                    method: 'get',
+                    success: (response) => {
+                        if (response.status) {
+                            Swal.fire(
+                                'Deleted!',
+                                'Your Category has been deleted.',
+                                'success'
+                            )
+                            location.reload()
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: response.length +' product exists in ths category!',
+                                footer: '<a href="/admin/view-products">Do you really need to delete? Manage products here..</a>'
+                            })
+
+                        }
+                    }
+                })
+            }
+        })
+
+    }
+</script>

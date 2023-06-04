@@ -1,0 +1,65 @@
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>View Users</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/dash">Home</a></li>
+                <li class="breadcrumb-item">User Management</li>
+                <li class="breadcrumb-item active">View Users</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+    {{!-- table-bordered border-primary --}}
+    <table class="table table-bordered table-hover " id="myTable" >
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Mobile No.</th>
+                <th scope="col">Status</th>
+                <th scope="col">Action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            {{#each users}}
+            <tr>
+                <th scope="row" class="create_index"></th>
+                <td>{{this.UserName}}</td>
+                <td>{{this.UserEmail}}</td>
+                <td>{{this.MobileNo}}</td>
+                <td>
+                    {{#if this.block}}
+                    <span class="badge rounded-pill bg-danger">Blocked</span>
+                    {{else}}
+                    <span class="badge rounded-pill bg-success">Active</span>
+                    {{/if}}
+                </td>
+
+                <td>
+                    {{#if this.block}}
+                    <a href="/admin/unBlock/{{this._id}}"><button type="button"
+                            class="btn  badge rounded-pill bg-secondary">Enable</button></a>
+                    {{else}}
+                    <a href="/admin/block/{{this._id}}"><button type="button"
+                            class=" btn   badge rounded-pill bg-secondary">Block</button></a>
+                    {{/if}}
+                </td>
+
+            </tr>
+            {{/each}}
+
+        </tbody>
+    </table>
+    <!-- End Primary Color Bordered Table -->
+
+
+
+
+</main><!-- End #main -->
+
+
+
+

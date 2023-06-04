@@ -37,7 +37,7 @@ The project is divided into mainly 2 modules Admin and User
 | User side | Admin side |
 | --- | --- |
 |User registration and login|Login and dash board  |
-| OTP Login (Twilio)| Chart, Graph & Sales reports |
+| Chart, Graph & Sales reports |
 | Multiple Address Management|User management Block/Unblock  |
 | Responsive Home screen with Banner|  Category management|
 |Category wise product list |Product management  |

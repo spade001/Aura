@@ -2,8 +2,6 @@
 > Aura is an e-commerce website that allows customers to browse and purchase products online. The website features a user-friendly interface, a secure payment system, and advanced search and filtering options. Customers can create accounts, track their orders status.
 > Live demo [_here_](https://Aura.gq/).
 
-https://user-images.githubusercontent.com/109226401/235305994-d6d54457-798c-400d-9cf5-aed16cd5f4bd.mp4
-
 ## Table of Contents
 * [Technologies Used](#technologies-used)
 * [Features](#features)
@@ -24,9 +22,6 @@ https://user-images.githubusercontent.com/109226401/235305994-d6d54457-798c-400d
 - Handle Bars
 - HTML CSS 
 - Bootstrap 5
-- Nginx 
-- AWS EC2 
-- Twilio for OTP verification
 - Git for Version control
 
 
@@ -87,26 +82,4 @@ Run the application with this command:
 npm start
 ```
 
-
-
-## Contact
-Created by [@ChristapherAntony](https://www.linkedin.com/in/christapherantony-5568a3156/) - feel free to contact me!
-
-
-## Screenshots
-#### Landing page
-![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682766551/Aura/a1_wcgqzp.png)
-#### Search and filters
-![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682766548/Aura/2_pnfu2y.png)
-#### Payment
-![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682766549/Aura/razor_pay_bqyiwb.png)
-#### Order Details
-![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682767079/Aura/order_details_d13jez.png)
-#### User Dash
-![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682766546/Aura/dash_board_ierplv.png)
-
-#### Admin Dash
-![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682766547/Aura/admin_p6lltb.png)
-#### Offer Management
-![Example screenshot](https://res.cloudinary.com/dprxebwil/image/upload/v1682766695/Aura/zz_feyo9u.png)
 

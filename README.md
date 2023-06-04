@@ -64,8 +64,8 @@ To get started  you can simply clone this `Aura-Ecommerce` repository and instal
 Clone the `ecommerce-demo` repository using git:
 
 ```bash
-git clone https://github.com/ChristapherAntony/Aura-Ecommerce
-cd ecommerce-demo
+git clone https://github.com/spade001/Aura
+cd Aura
 ```
 
 Install dependencies with this command:

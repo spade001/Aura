@@ -37,10 +37,10 @@ db.user.update(
     {
         $set: {
             'Address.1.content': {
-                Name: 'Christapher Antony',
-                HouseNo: '+919446655316',
-                Street: 'KARTHIKAPURAM (PO)',
-                TownCity: 'Kannur',
+                Name: 'sreevalli',
+                HouseNo: '+90000000',
+                Street: 'ASDEF',
+                TownCity: 'QWDE',
                 State: 'Kerala',
                 Country: 'India',
                 PostCode: '670571',

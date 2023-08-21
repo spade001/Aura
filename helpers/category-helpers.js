@@ -6,7 +6,12 @@ const collections = require('../config/collections')
 var objectId = require('mongodb').ObjectId
 
 module.exports = {
-
+    isCategory:()=>{
+        return new Promise(async(resolve, reject) => {
+           let category= await  db.get().collection(collections.CATEGORY_COLLECTION).find()
+           console.log('This is========>',category);
+        })
+      },
     addCategory: (categoryDetails) => {
         return new Promise(async(resolve,reject)=>{
             categoryDetails.categoryDiscount = parseInt(categoryDetails.categoryDiscount)
@@ -23,6 +28,7 @@ module.exports = {
         return new Promise(async (resolve, reject) => {   //getting data should write in await 
             let categories = await db.get().collection(collections.CATEGORY_COLLECTION).find().toArray()  // toArray- convert into an array
             resolve(categories)
+           
         })
     },
     deleteCategory: (categoryId) => {

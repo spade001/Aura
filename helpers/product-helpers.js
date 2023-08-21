@@ -6,7 +6,7 @@ const { response } = require('express')
 var objectId = require('mongodb').ObjectId
 
 module.exports = {
-
+ 
     addProduct: (product) => {
         console.log(product,"out above from  the db ");
         return new Promise (async(resolve,reject)=>{
@@ -275,6 +275,5 @@ module.exports = {
 
 
 }
-
 
 

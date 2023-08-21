@@ -14,7 +14,7 @@
                   {{/if}}
             </li>
             <li><a href="/viewAll">Products</a></li>
-            <li><a href="#orders">Orders</a></li>
+            <li><a href="/account">Orders</a></li>
          <li class="listStyle">
               {{#if headerDetails.wishlistCount}}
                             <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
@@ -34,20 +34,19 @@
 
 
  
-    <div class="searchBar">
-      <div class="">
+                    <div class="searchBar">
                         <div class="input-group md-form form-sm form-2 pl-0">
                             <input id="searchBox" class="form-control my-0 py-1 red-border" type="text"
                                 onkeyup="search()" placeholder="Search" aria-label="Search">
-                            <div class="input-group-append">
-                                <button onclick="search2()" class="input-group-text red lighten-3 " id="basic-text1"><i
-                                        class="fas fa-search text-grey" aria-hidden="true"></i></button>
-                            </div>
+                              <div class="input-group-append">
+                                    <button onclick="search2()" class="input-group-text red lighten-3 " id="basic-text1"><i
+                                     class="fas fa-search text-grey" aria-hidden="true"></i>
+                                    </button>
+                              </div>
                         </div>
-                        <div class="col-11" id="drop" style="background-color: white; position: absolute; z-index: 10;">
-                        </div>
+                          <div class="col-11" id="drop" style="background-color: white; position: absolute; z-index: 10;"> </div>
+                   
                     </div>
-    </div>
 
     <div class="smallCart">
                    
@@ -61,11 +60,13 @@
                                      
                                         {{!-- <a class="cart-active" href="#"> --}}
 
-                                            <i class="bi bi-cart3 fa-sm text-white"></i><span class="pro-count position-absolute start-10 translate-middle badge rounded-pill bg-dark"
-                                              {{#if headerDetails.cartProducts}}
+                                            <i class="bi bi-cart3 fa-sm text-white"></i>
+                                                  {{#if headerDetails.cartProducts}}
+                                            <span class="pro-count position-absolute start-10 translate-middle badge rounded-pill bg-dark"
                                                 id="cart-count">{{headerDetails.cartCount}}</span>
-            
-                                        {{/if}} 
+                                            
+                                             {{/if}} 
+
                                         </a>
                             </div>
 
@@ -131,8 +132,7 @@
                             </div>
 
                             {{else}}
-                            <div
-                                class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
+                         <div  class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc header-cart">
                                 <a onclick="confirmLoginCart()">
                                     <i class="bi bi-cart3 fa-sm text-white"></i>
                                 </a>
@@ -174,7 +174,7 @@
 
 
 
-   <!-- offers section start -->
+<!-- offers section start -->
     <section class="offerSection">
       <h2>offers</h2>
        <div class="offerDiv">
@@ -184,9 +184,6 @@
           </div>
           
     </section>
-
-
-
 <!-- offers section end -->
 
 
@@ -227,10 +224,6 @@
 </div>
 
              
-        
-
-
-
 {{!-- top deals --}}
 <div class="product-area pb-70">
     <div class="container">
@@ -392,7 +385,9 @@
                     })
                     // location.href = '/detailsVerify/' + proId
                 }
-
+            }
+        })
+    }
 
     function confirmLoginCart() {
         Swal.fire({

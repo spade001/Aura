@@ -6,7 +6,7 @@ const categoryHelpers = require('../helpers/category-helpers');
 const otpHelpers = require("../helpers/otp-helpers")
 const wishlistHelper = require("../helpers/wishList-helper")
 const { response } = require('express');
-require('dotenv').config()
+require('dotenv').config()  
 
 
 const paypal = require('paypal-rest-sdk');
@@ -470,3 +470,4 @@ module.exports = {
 
 }
 
+      

@@ -40,7 +40,7 @@ app.use(nocache());
 db.connect((err) => {
   if (err) console.log("connection error" + err);
   else console.log("data base connected");
-})
+}) 
 
 
 app.use('/', usersRouter);

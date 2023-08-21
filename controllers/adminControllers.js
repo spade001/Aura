@@ -107,7 +107,16 @@ module.exports = {
     },
     getAddProducts: (req, res, next) => {
         categoryHelpers.getAllCategory().then((category) => {
-            res.render('admin/add-product', { layout: 'admin-layout', category, productError: req.session.productError })
+            //check category availability
+            if(category.length<=0){
+              nocategory={
+                status:true
+              }
+              res.render('admin/add-product', { layout: 'admin-layout', nocategory,category, productError: req.session.productError })
+        
+            }else{
+            res.render('admin/add-product', { layout: 'admin-layout',category, productError: req.session.productError })
+            }
             req.session.productError = null
         })
     },
@@ -117,6 +126,7 @@ module.exports = {
         })
     },
     addNewProduct: async (req, res) => {
+        let category=await  productHelpers.isCategory();
         req.body.image1 = req.files.image1[0].filename
         req.body.image2 = req.files.image2[0].filename
         req.body.image3 = req.files.image3[0].filename
@@ -306,4 +316,3 @@ module.exports = {
 
 
 }
-

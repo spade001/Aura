@@ -125,10 +125,18 @@ view products for users space !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! */
 
 
 
-.styleNav a,.searchBar a,.cartDiv a,.profileDiv a {
+.styleNav a,.cartDiv a,.profileDiv a {
   font-family:'Roboto';
   text-decoration: none;
   color: white;
+  font-weight: bold;
+  font-size: 1em;
+  letter-spacing: 1px;
+}
+.searchBar a{
+  font-family:'Roboto';
+  text-decoration: none;
+  color: rgb(0, 0, 0);
   font-weight: bold;
   font-size: 1em;
   letter-spacing: 1px;

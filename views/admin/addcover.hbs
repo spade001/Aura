@@ -16,7 +16,7 @@
 
     <section class="section">
         <div>
-            <p>Upload Main Banners here  <a
+            <p>Upload cover image <a
                     href="/admin/addBanner" class="btn btn-primary btn-sm">Add New</a></p>
 
         </div>
@@ -50,35 +50,3 @@
 
 
 </main><!-- End #main -->
-
-<script>
-
-
-    function deleteBanner(bannerId) {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    url: '/admin/delete-TopBanner/'+bannerId,
-                    success(response) {
-                        Swal.fire(
-                            'Deleted!',
-                            'Your Banner has been deleted.',
-                            'success'
-                        )
-                        location.reload()
-                    }
-                })
-
-            }
-        })
-
-    }
-</script>

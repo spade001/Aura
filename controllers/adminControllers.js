@@ -126,7 +126,7 @@ module.exports = {
         })
     },
     addNewProduct: async (req, res) => {
-        let category=await  productHelpers.isCategory();
+      
         req.body.image1 = req.files.image1[0].filename
         req.body.image2 = req.files.image2[0].filename
         req.body.image3 = req.files.image3[0].filename
@@ -269,6 +269,9 @@ module.exports = {
     applyCouponDiscount: async (req, res, next) => {
         let getCouponDiscount = await adminHelpers.getCouponDiscount(req.params.couponCode)
         res.json(getCouponDiscount)
+    },
+    getCoverImage:(req,res)=>{
+    res.render('admin/addcover')
     },
     getTopBanner: async (req, res, next) => {
         const bannerTop_main = await productHelpers.getBannerTop_main()

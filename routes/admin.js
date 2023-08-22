@@ -9,7 +9,7 @@ const {
   addCategory, getEditCategory, updateCategory, getDeleteCategory, viewProducts, getAddProducts, categoryViseDiscount,
   addNewProduct, getEditProducts, updateProduct, deleteProduct, viewOrderDetails, viewAllOrders, changeDeliveryStatus,
   viewSalesReport, salesReportByDate, viewOfferManagementPage, viewCouponManagementPage, addNewCoupon, updateCoupon, deleteCoupon,
-  applyCouponDiscount, getTopBanner, getAddBannerPage, addNewBanner, getEditBannerPage, updateTopBanner, deleteTopBanner, viewAdminProfile
+  applyCouponDiscount, getTopBanner, getAddBannerPage, addNewBanner, getEditBannerPage, updateTopBanner, deleteTopBanner, viewAdminProfile,getCoverImage
 } = require('../controllers/adminControllers');
 
 
@@ -58,6 +58,7 @@ router.post('/deleteCoupon', verifyAdmin, deleteCoupon)
 router.post('/getCouponDiscount/:couponCode', verifyAdmin, applyCouponDiscount)
 
 //TopBanner Routes 
+router.get('/coverimage',verifyAdmin,getCoverImage)
 router.get('/topBanner', verifyAdmin, getTopBanner)
 router.get('/addBanner', verifyAdmin, getAddBannerPage)
 router.post('/add-banner', uploadTwoBanner, addNewBanner)

@@ -33,7 +33,16 @@ const multerStorageBanner = multer.diskStorage({
   }
 })
 const uploadTwoBanner = multer({ storage: multerStorageBanner }).fields([{ name: 'largeImg', maxCount: 1 }])
-
+//cover image
+const multerStorageCover = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./public/images/coverimg");
+  },
+  filename: function (req, file, cb) {
+    cb(null, Date.now() + '-' + file.originalname)
+  }
+})
+const uploadCover = multer({ storage: multerStorageBanner }).fields([{ name: 'largeImg', maxCount: 1 }])
 
 module.exports = {
   uploadMultiple, uploadSingleFile, uploadTwoBanner

@@ -27,10 +27,10 @@ router.get('/login-register', verifyUser, getLoginRegisterPage);
 router.get('/login', getLogin);
 router.post('/logIn', login)
 router.get('/logOut', logOut);
-router.get('/otpLogin', getOtpLogin);
-router.post('/enterOtp', verifyMobileNumber)
-router.get('/otpVerify', enterOtpPage); // if mobile number not matched with the DB
-router.post('/verifyOtp', verifyOTP);
+// router.get('/otpLogin', getOtpLogin);
+// router.post('/enterOtp', verifyMobileNumber)
+// router.get('/otpVerify', enterOtpPage); // if mobile number not matched with the DB
+// router.post('/verifyOtp', verifyOTP);
 router.get('/signUp', SignUpPage);
 router.post('/signUp', postSignUp)
 router.get('/enterCoupon', getReferralPage);

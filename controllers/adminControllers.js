@@ -270,8 +270,31 @@ module.exports = {
         let getCouponDiscount = await adminHelpers.getCouponDiscount(req.params.couponCode)
         res.json(getCouponDiscount)
     },
-    getCoverImage:(req,res)=>{
-    res.render('admin/addcover')
+    // getTopCover: async (req, res, next) => {
+    //     const coverimg = await productHelpers.getBannerCover()
+    //     console.log(coverimg);
+    //     res.render('admin/topBanner', { layout: 'admin-layout', coverimg })
+    // },
+    getCoverPage:async(req,res)=>{
+        const coverimg = await productHelpers.getBannerCover()
+        console.log(coverimg);
+    res.render('admin/cover',{ layout: 'admin-layout',coverimg  })
+
+    },
+    addCoverImg: async (req, res, next) => {
+        res.render('admin/add-cover', { layout: 'admin-layout' })
+    
+    },
+    addNewCover: (req, res) => {
+        req.body.Img = req.files.image[0].filename
+        console.log(req.files);
+        productHelpers.addCover(req.body).then(()=>{
+            res.redirect('/admin/coverimage')
+        })
+         
+         
+      
+       
     },
     getTopBanner: async (req, res, next) => {
         const bannerTop_main = await productHelpers.getBannerTop_main()

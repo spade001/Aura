@@ -60,51 +60,55 @@ module.exports = {
         }
 
     },
-    getOtpLogin: (req, res, next) => {
-        res.render('users/otpLogin', { mobileError: req.session.mobileError });
-        req.session.mobileError = null;
-    },
-    verifyMobileNumber: (req, res, next) => {
-        userHelpers.verifyMobile(req.body.mobile).then((response) => {
-            if (response.status == false) {
-                req.session.mobileError = "Please Enter a Registered Mobile Number! ";
-                res.redirect('/otpLogin');
-            } else if (response.active == false) {
-                req.session.mobileError = "Your account is Blocked!";
-                res.redirect('/otpLogin');
-            } else {
-                req.session.mobileNumber = req.body.mobile
-                mobile = `+91${req.body.mobile}`
-                otpHelpers.sendOTP(mobile).then((data) => {
-                    res.render('users/enterOtp')
-                })
-            }
-        })
-        //////////////////////////
-        // res.render('users/enterOtp') //bypass otp
-    },
-    enterOtpPage: (req, res, next) => {
-        res.render('users/enterOtp', { otpError: req.session.otpError })
-        req.session.otpError = null;
-    },
-    verifyOTP: (req, res, next) => {
-        let number = (req.body.one + req.body.two + req.body.three + req.body.four + req.body.five + req.body.six)
-        OTP = (number)
-        otpHelpers.verifyOTP(OTP).then(async (response) => {
-            if (response.status) {
-                mobileNumber = req.session.mobileNumber
-                req.session.mobileNumber = null
-                req.session.user = await userHelpers.otpLogin(mobileNumber)
-                res.redirect('/'); ``
-            }
-            else {
-                req.session.otpError = "Invalid OTP";
-                res.redirect('/otpVerify');
-            }
-        })
-        //res.redirect('/'); //bypass otp
 
-    },
+    
+    // getOtpLogin: (req, res, next) => {
+    //     res.render('users/otpLogin', { mobileError: req.session.mobileError });
+    //     req.session.mobileError = null;
+    // },
+    // verifyMobileNumber: (req, res, next) => {
+    //     userHelpers.verifyMobile(req.body.mobile).then((response) => {
+    //         if (response.status == false) {
+    //             req.session.mobileError = "Please Enter a Registered Mobile Number! ";
+    //             res.redirect('/otpLogin');
+    //         } else if (response.active == false) {
+    //             req.session.mobileError = "Your account is Blocked!";
+    //             res.redirect('/otpLogin');
+    //         } else {
+    //             req.session.mobileNumber = req.body.mobile
+    //             mobile = `+91${req.body.mobile}`
+    //             otpHelpers.sendOTP(mobile).then((data) => {
+    //                 res.render('users/enterOtp')
+    //             })
+    //         }
+    //     })
+    //     //////////////////////////
+    //     // res.render('users/enterOtp') //bypass otp
+    // },
+    // enterOtpPage: (req, res, next) => {
+    //     res.render('users/enterOtp', { otpError: req.session.otpError })
+    //     req.session.otpError = null;
+    // },
+    // verifyOTP: (req, res, next) => {
+    //     let number = (req.body.one + req.body.two + req.body.three + req.body.four + req.body.five + req.body.six)
+    //     OTP = (number)
+    //     otpHelpers.verifyOTP(OTP).then(async (response) => {
+    //         if (response.status) {
+    //             mobileNumber = req.session.mobileNumber
+    //             req.session.mobileNumber = null
+    //             req.session.user = await userHelpers.otpLogin(mobileNumber)
+    //             res.redirect('/'); ``
+    //         }
+    //         else {
+    //             req.session.otpError = "Invalid OTP";
+    //             res.redirect('/otpVerify');
+    //         }
+    //     })
+    //     //res.redirect('/'); //bypass otp
+
+    // },
+
+
     SignUpPage: async (req, res, next) => {
         let headerDetails = await userHelpers.getHeaderDetails(req.session.user?._id)
         res.render('users/signUp', { headerDetails })

@@ -1,0 +1,52 @@
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Banner Management</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/admin/dash">Home</a></li>
+                <li class="breadcrumb-item"></li><a href="#">Banner Management/</a></li>
+                <li class="breadcrumb-item active"> Top Banner</i></li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+
+
+
+    <section class="section">
+  {{#if coverimg}}
+
+{{else}}
+        <div>
+            <p>Upload cover image <a
+                    href="/admin/addCover" class="btn btn-primary btn-sm">Add New</a></p>
+
+        </div>
+        {{/if}}
+        <hr>
+        
+        <div class="row ">
+            {{#each coverimg}}
+            <div class=" col-md-6 card mb-3 ">
+                <img class="card-img-top" src="/images/cover-Img/{{this.Img}}" alt="Card image cap">
+                {{this.position}}
+            </div>
+            {{/each }} 
+            <h1>Edit</h1>
+           
+
+        </div>
+    </section>
+
+
+
+
+
+
+
+
+
+
+
+</main><!-- End #main -->

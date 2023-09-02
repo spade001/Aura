@@ -2,14 +2,14 @@
 var express = require('express');
 const userHelpers = require('../helpers/user-helpers');
 var router = express.Router();
-const { uploadSingleFile, uploadMultiple, uploadTwoBanner } = require('../middlewares/multer');
+const { uploadSingleFile, uploadMultiple, uploadTwoBanner,uploadCover } = require('../middlewares/multer');
 const { verifyAdmin } = require('../middlewares/verification');
 const {
   dashboard, adminLogin, getDashBoard, viewUsers, blockUser, unBlockUser, signOut, viewProductCategory, getAddCategoryPage,
   addCategory, getEditCategory, updateCategory, getDeleteCategory, viewProducts, getAddProducts, categoryViseDiscount,
   addNewProduct, getEditProducts, updateProduct, deleteProduct, viewOrderDetails, viewAllOrders, changeDeliveryStatus,
   viewSalesReport, salesReportByDate, viewOfferManagementPage, viewCouponManagementPage, addNewCoupon, updateCoupon, deleteCoupon,
-  applyCouponDiscount, getTopBanner, getAddBannerPage, addNewBanner, getEditBannerPage, updateTopBanner, deleteTopBanner, viewAdminProfile,getCoverImage
+  applyCouponDiscount, getTopBanner, getAddBannerPage, addNewBanner, getEditBannerPage, updateTopBanner, deleteTopBanner, viewAdminProfile,addCoverImg, getCoverPage, addNewCover
 } = require('../controllers/adminControllers');
 
 
@@ -58,11 +58,13 @@ router.post('/deleteCoupon', verifyAdmin, deleteCoupon)
 router.post('/getCouponDiscount/:couponCode', verifyAdmin, applyCouponDiscount)
 
 //TopBanner Routes 
-router.get('/coverimage',verifyAdmin,getCoverImage)
-router.get('/topBanner', verifyAdmin, getTopBanner)
-router.get('/addBanner', verifyAdmin, getAddBannerPage)
-router.post('/add-banner', uploadTwoBanner, addNewBanner)
-router.get('/edit-TopBanner/:id', verifyAdmin, getEditBannerPage)
+router.get('/coverimage',verifyAdmin,getCoverPage)
+router.get('/addCover',verifyAdmin,addCoverImg)
+router.post('/add-cover',uploadCover,addNewCover)
+router.get('/topBanner',verifyAdmin, getTopBanner)
+router.get('/addBanner',verifyAdmin, getAddBannerPage)
+router.post('/add-banner',uploadTwoBanner, addNewBanner)
+router.get('/edit-TopBanner/:id',verifyAdmin, getEditBannerPage)
 router.post('/update-TopBanner/:id', uploadTwoBanner, updateTopBanner)
 router.get('/delete-TopBanner/:id', verifyAdmin, deleteTopBanner)
 

@@ -196,10 +196,24 @@ module.exports = {
 
         })
     },
-    getBannerTop_main: () => {
+    addCover: (details) => {
         return new Promise(async (resolve, reject) => {
-            let response = await db.get().collection(collections.BANNER_COLLECTION).find({ position: 'Top_Main' }).limit(3).toArray()
+            details.position = "Main"
+            details.dateAdded = new Date
+            let response={}
+            db.get().collection(collections.BANNER_COLLECTION).insertOne(details).then(() => {
+
+                resolve(response.status=true)
+                console.log('success');
+            })
+
+        })
+    },
+    getBannerCover: () => {
+        return new Promise(async (resolve, reject) => {
+            let response = await db.get().collection(collections.BANNER_COLLECTION).find({ position: 'Main' }).limit(1).toArray()
             resolve(response)
+       
         })
     }
     ,

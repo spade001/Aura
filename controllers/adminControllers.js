@@ -30,6 +30,7 @@ module.exports = {
         const TopSelling = await adminHelpers.topSelling()
         const OrderHistory = await adminHelpers.getRecentOrderHistory()
         const monthlygraph = await adminHelpers.monthlyR_P_S()   // revenues profit sales count
+        console.log(DashDetails)
         res.render('admin/dash', { layout: 'admin-layout', DashDetails, SalesReport, products, TopSelling, OrderHistory, monthlygraph });
     },
     viewUsers: (req, res, next) => {
@@ -131,7 +132,6 @@ module.exports = {
         req.body.image2 = req.files.image2[0].filename
         req.body.image3 = req.files.image3[0].filename
         req.body.image4 = req.files.image4[0].filename
-        req.body.costPrice = parseInt(req.body.costPrice),
             req.body.MRP = parseInt(req.body.MRP),
             req.body.categoryDiscount = parseInt(req.body.categoryDiscount),
             req.body.productDiscount = parseInt(req.body.productDiscount),
@@ -239,46 +239,10 @@ module.exports = {
         console.log(products);
         res.render('admin/offer-management', { layout: 'admin-layout', category, products })
     },
-    viewCouponManagementPage: async (req, res, next) => {
-        let activeCoupons = await adminHelpers.getActiveCoupons()
-        let expiredCoupons = await adminHelpers.getExpiredCoupons()
-        res.render('admin/CouponManagements', { layout: 'admin-layout', activeCoupons, expiredCoupons, couponError: req.session.couponError })
-        req.session.couponError = null
-    },
-    addNewCoupon: async (req, res, next) => {
-        req.body.couponDiscount = parseInt(req.body.couponDiscount)
-        req.body.maxAmount = parseInt(req.body.maxAmount)
-        req.body.minSpend = parseInt(req.body.minSpend)
-        let addCoupon = await adminHelpers.addNewCoupon(req.body)
-        if (addCoupon.status === false) {
-            req.session.couponError = "Your Entered Coupon code Already exists! Try again..";
-        } else {
-            req.session.couponError = null
-            res.redirect('/admin/CouponManagements')
-        }
-
-    },
-    updateCoupon: async (req, res, next) => {
-        let updateCoupon = await adminHelpers.updateCoupon(req.body)
-        res.redirect('/admin/CouponManagements')
-    },
-    deleteCoupon: async (req, res, next) => {
-        let deleteCoupon = await adminHelpers.deleteCoupon(req.body)
-        res.json(response)
-    },
-    applyCouponDiscount: async (req, res, next) => {
-        let getCouponDiscount = await adminHelpers.getCouponDiscount(req.params.couponCode)
-        res.json(getCouponDiscount)
-    },
-    // getTopCover: async (req, res, next) => {
-    //     const coverimg = await productHelpers.getBannerCover()
-    //     console.log(coverimg);
-    //     res.render('admin/topBanner', { layout: 'admin-layout', coverimg })
-    // },
     getCoverPage:async(req,res)=>{
         const coverimg = await productHelpers.getBannerCover()
         console.log(coverimg);
-    res.render('admin/cover',{ layout: 'admin-layout',coverimg  })
+    res.render('admin/cover',{ layout: 'admin-layout',coverimg })
 
     },
     addCoverImg: async (req, res, next) => {
@@ -288,14 +252,33 @@ module.exports = {
     addNewCover: (req, res) => {
         req.body.Img = req.files.image[0].filename
         console.log(req.files);
-        productHelpers.addCover(req.body).then(()=>{
+        productHelpers.addCover(req.body).then((msg)=>{
+            console.log(msg);
+
             res.redirect('/admin/coverimage')
         })
-         
-         
-      
-       
     },
+    getEditCoverbannerPage : async (req, res) => {
+        let coverimg = await productHelpers.getBannerDetails(req.params.id)
+        res.render('admin/edit-cover', { layout: 'admin-layout', coverimg })
+    },
+    updateCoverBanner:async(req,res)=>{
+        console.log("cover Banner");
+     if(req.files.image==null){
+        temp1= await productHelpers.fetchBannerImg(req.params.id, "Main")
+        console.log('Temp is',temp1)
+     }else{
+        temp1 = req.files.image[0].filename
+     }
+
+     req.body.Img = temp1
+     console.log("Body",req.body);
+     productHelpers.updateCover(req.params.id, req.body).then((response) => {
+         res.redirect('/admin/coverimage')
+     })
+    },
+
+
     getTopBanner: async (req, res, next) => {
         const bannerTop_main = await productHelpers.getBannerTop_main()
         res.render('admin/topBanner', { layout: 'admin-layout', bannerTop_main })
@@ -312,6 +295,7 @@ module.exports = {
         let topBanner = await productHelpers.getBannerDetails(req.params.id)
         res.render('admin/edit-TopBanner', { layout: 'admin-layout', topBanner })
     },
+
     updateTopBanner: async (req, res) => {
 
         if (req.files.largeImg == null) {

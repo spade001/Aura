@@ -8,8 +8,7 @@ const {
   dashboard, adminLogin, getDashBoard, viewUsers, blockUser, unBlockUser, signOut, viewProductCategory, getAddCategoryPage,
   addCategory, getEditCategory, updateCategory, getDeleteCategory, viewProducts, getAddProducts, categoryViseDiscount,
   addNewProduct, getEditProducts, updateProduct, deleteProduct, viewOrderDetails, viewAllOrders, changeDeliveryStatus,
-  viewSalesReport, salesReportByDate, viewOfferManagementPage, viewCouponManagementPage, addNewCoupon, updateCoupon, deleteCoupon,
-  applyCouponDiscount, getTopBanner, getAddBannerPage, addNewBanner, getEditBannerPage, updateTopBanner, deleteTopBanner, viewAdminProfile,addCoverImg, getCoverPage, addNewCover
+  viewSalesReport, salesReportByDate, viewOfferManagementPage, getEditCoverbannerPage, getTopBanner, getAddBannerPage, addNewBanner, getEditBannerPage, updateCoverBanner, updateTopBanner, deleteTopBanner, viewAdminProfile,addCoverImg, getCoverPage, addNewCover
 } = require('../controllers/adminControllers');
 
 
@@ -48,19 +47,14 @@ router.post('/searchByDate', verifyAdmin, salesReportByDate)
 //Profile Routes 
 router.get('/profile', verifyAdmin, viewAdminProfile)
 
-//Offer And Coupon Management Routes 
+//Offer Routes 
 router.get('/offerManagement', verifyAdmin, viewOfferManagementPage)
-
-router.get('/CouponManagements', verifyAdmin, viewCouponManagementPage)
-router.post('/addCoupon', verifyAdmin, addNewCoupon)
-router.post('/updateCoupon', verifyAdmin, updateCoupon)
-router.post('/deleteCoupon', verifyAdmin, deleteCoupon)
-router.post('/getCouponDiscount/:couponCode', verifyAdmin, applyCouponDiscount)
-
 //TopBanner Routes 
 router.get('/coverimage',verifyAdmin,getCoverPage)
 router.get('/addCover',verifyAdmin,addCoverImg)
 router.post('/add-cover',uploadCover,addNewCover)
+router.get('/edit-CoverBanner/:id',verifyAdmin,getEditCoverbannerPage)
+router.post('/update-CoverImg/:id',uploadCover,updateCoverBanner)
 router.get('/topBanner',verifyAdmin, getTopBanner)
 router.get('/addBanner',verifyAdmin, getAddBannerPage)
 router.post('/add-banner',uploadTwoBanner, addNewBanner)

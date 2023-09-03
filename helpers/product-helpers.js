@@ -25,7 +25,6 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             let products = await db.get().collection(collections.PRODUCT_COLLECTION).find().toArray()
             resolve(products)
-            // reject(err)
         })
     },
     getAllProductsLookUP: () => {
@@ -69,24 +68,7 @@ module.exports = {
             resolve(products)
         })
     },
-    getCategoryProductsHome: (categoryId) => {
-        console.log(categoryId);
-        return new Promise(async (resolve, reject) => {
-            let mobileCategory = await db.get().collection(collections.PRODUCT_COLLECTION).find({ category: objectId('6358e6ae421c3c872a21c472') }).toArray()
-            let laptopCategory = await db.get().collection(collections.PRODUCT_COLLECTION).find({ category: objectId('6358e6d8421c3c872a21c473') }).toArray()
-            let audioCategory = await db.get().collection(collections.PRODUCT_COLLECTION).find({ category: objectId('637cb20726a4b12a66625c8f') }).toArray()
-            let watchCategory = await db.get().collection(collections.PRODUCT_COLLECTION).find({ category: objectId('6358e72f421c3c872a21c474') }).toArray()
-            let televisionCategory = await db.get().collection(collections.PRODUCT_COLLECTION).find({ category: objectId('6358e7a5421c3c872a21c476') }).toArray()
-            let categoryProducts = {
-                mobileCategory: mobileCategory,
-                laptopCategory: laptopCategory,
-                audioCategory: audioCategory,
-                watchCategory: watchCategory,
-                televisionCategory: televisionCategory,
-              }
-            resolve(categoryProducts)
-        })
-    },
+ 
     getTopDiscounted: () => {
         return new Promise(async (resolve, reject) => {
             let products = await db.get().collection(collections.PRODUCT_COLLECTION).find({ totalDiscount: { $gte: 15 } }).toArray()
@@ -200,23 +182,34 @@ module.exports = {
         return new Promise(async (resolve, reject) => {
             details.position = "Main"
             details.dateAdded = new Date
-            let response={}
+            let message
+            let data = await db.get().collection(collections.BANNER_COLLECTION).findOne({ position: 'Main' })
+         if(data){
+            resolve(message='image alredy exist')
+         }else{
             db.get().collection(collections.BANNER_COLLECTION).insertOne(details).then(() => {
-
-                resolve(response.status=true)
                 console.log('success');
+                resolve(message='image added')
             })
+        }
 
         })
     },
     getBannerCover: () => {
         return new Promise(async (resolve, reject) => {
-            let response = await db.get().collection(collections.BANNER_COLLECTION).find({ position: 'Main' }).limit(1).toArray()
+            let response = await db.get().collection(collections.BANNER_COLLECTION).findOne({ position: 'Main' })
             resolve(response)
+            console.log(response);
        
         })
     }
     ,
+    getBannerTop_main: () => {
+        return new Promise(async (resolve, reject) => {
+            let response = await db.get().collection(collections.BANNER_COLLECTION).find({ position: 'Top_Main' }).limit(3).toArray()
+            resolve(response)
+        })
+    },
     getBannerDetails: (bannerId) => {
         return new Promise(async (resolve, reject) => {
             let response = await db.get().collection(collections.BANNER_COLLECTION).findOne({ _id: objectId(bannerId) })
@@ -227,8 +220,25 @@ module.exports = {
     fetchBannerImg: (bannerId, BannerName) => {
         return new Promise(async (resolve, reject) => {
             let response = await db.get().collection(collections.BANNER_COLLECTION).findOne({ _id: objectId(bannerId) })
-                resolve(response.largeImg)
+            if(BannerName=="Main"){
+                resolve(response.Img)
+            }else{
+                   resolve(response.largeImg)
+            }
             
+        })
+    },
+    updateCover:(bannerId,Details)=>{
+        return new Promise((resolve,reject)=>{
+            console.log("details",Details);
+            db.get().collection(collections.BANNER_COLLECTION).updateOne({_id: objectId(bannerId)},{
+                $set:{
+                    Img:Details.Img,
+                    dateAdded: new Date()
+                }
+            }).then((response)=>{
+                resolve()
+            })
         })
     },
     updateBanner: (bannerId, bannerDetails) => {
@@ -239,7 +249,7 @@ module.exports = {
                     bannerTitle: bannerDetails.bannerTitle,
                     bannerDescription: bannerDetails.bannerDescription,
                     largeImg: bannerDetails.largeImg,
-                    smallImg: bannerDetails.smallImg,
+                    // smallImg: bannerDetails.smallImg,
                     dateAdded: new Date()
                 }
             }).then((response) => {

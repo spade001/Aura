@@ -68,21 +68,9 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-floating mb-3">
-                                    <select name="brand" class="form-select" id="floatingSelect" aria-label="State">
-                                        <option></option>
-                                        <option value="Nike">Nike</option>
-                                        <option value="Clarks">Clarks</option>
-                                        <option value="Adidas">Adidas</option>
-                                        <option value="Bata">Bata</option>
-                                        <option value="Beebok">Reebok</option>
-                                        <option value="Paragon">Paragon</option>
-                                        <option value="Woodland">Woodland</option>
-                                        <option value="Relaxo">Relaxo</option>
-                                        <option value="Lakhani">Lakhani</option>
-                                        <option value="Liberty">Liberty</option>
-                                        <option value="Lee">Lee</option>
-                                    </select>
-                                    <label for="floatingSelect">Brand</label>
+                                     <input name="brand" value="{{product.actualPrice}}" type="text" class="form-control"
+                                        id="floatingCity" placeholder="City">
+                                    <label for="floatingCity">Brand</label>
                                 </div>
                             </div>
                             <div class="col-md-3">
@@ -92,16 +80,7 @@
                                     <label for="floatingCity">Color</label>
                                 </div>
                             </div>
-                            <div class="col-md-2">
-                                <div class="form-floating">
-                                    <input name="costPrice" type="number" class="form-control" id="floatingCity"
-                                        placeholder="City">
-                                    <label for="floatingCity"><i class="bi bi-currency-rupee"></i>Cost Price </label>
-                                </div>
-                            </div>
-
-
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-floating">
                                     <input name="MRP" onkeyup="getTotalDiscount()" type="number" class="form-control"
                                         id="MRP" placeholder="City">
@@ -109,7 +88,7 @@
                                     </label>
                                 </div>
                             </div>
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                                 <div class="form-floating">
                                     <input onkeyup="getTotalDiscount(this)" type="number" name="productDiscount"
                                         class="form-control" id="productDiscount" placeholder="City">
@@ -224,14 +203,16 @@
         let variableTwo = variableOne.options[variableOne.selectedIndex].text
         if (variableTwo === "Select Any") {
             document.getElementById('categoryDiscount').value = "0"
-        } else {
+        }
+         else
+          {
             $.ajax({
                 url: "/admin/getCategoryDiscount",
                 data: {
                     categoryName: variableTwo
                 },
                 method: 'get',
-                success: (response) => {
+                success: function (response){
                     document.getElementById('categoryDiscount').value = response
 
                 }

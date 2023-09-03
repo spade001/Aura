@@ -141,17 +141,19 @@ module.exports = {
 
     landingPage: async function (req, res, next) {
         try {
+            categoryProducts={}
             let headerDetails = await userHelpers.getHeaderDetails(req.session.user?._id)
             const bannerTop_main = await productHelpers.getBannerTop_main()
             const topDiscounted = await productHelpers.getTopDiscounted()
             const allProducts = await productHelpers.getAllProducts()
-            const categoryProducts = await productHelpers.getCategoryProductsHome()
+            const coverImg=await productHelpers.getBannerCover()
+            console.log('I am the',coverImg);
             categoryProducts.topDiscounted = topDiscounted
             categoryProducts.allProducts = allProducts
             console.log("this is=====>"+bannerTop_main)
-            res.render('users/user-home', { headerDetails, bannerTop_main, categoryProducts,headernone:true})
+            res.render('users/user-home', { headerDetails, bannerTop_main, categoryProducts,headernone:true,coverImg})
         } catch (error) {
-            console.log(err);
+            console.log(error);
             res.redirect('/userError');
         }
 
@@ -217,8 +219,12 @@ module.exports = {
         const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
         const userDetails = await userHelpers.getUserDetails(req.session.user._id)
         const address = await userHelpers.getAllAddress(req.session.user._id)
-        const wallet = await userHelpers.getWallet(req.session.user._id)
-        res.render('users/account', { orders, headerDetails, userDetails, address, wallet });
+        res.render('users/account', { orders, headerDetails, userDetails, address });
+    },
+    orderSeperatePage:async(req,res)=>{
+        const orders = await userHelpers.getUserOrders(req.session.user._id)
+        const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
+        res.render('users/orderspage', { orders,headerDetails });
     },
     getAddAddressPage: async (req, res, next) => {
         const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
@@ -259,7 +265,7 @@ module.exports = {
         response.UserName = updatedUser.UserName
         response.UserEmail = updatedUser.UserName
         response.MobileNo = updatedUser.MobileNo
-        res.json(response)
+        // res.json(response)
     },
     viewCartPage: async (req, res, next) => {
         let userId = req.session.user._id                                              //also need to pass to hbs

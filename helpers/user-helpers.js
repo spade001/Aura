@@ -412,10 +412,10 @@ module.exports = {
 
     },
     updateAndFetchProfile: (userDetails) => {
-        let userId = userDetails.userId
+        let userId = userDetails.userId.trim()
+        //Note
         return new Promise(async (resolve, reject) => {
-            db.get().collection(collection.USER_COLLECTION)
-                .updateOne({ _id: objectId(userId) }, {
+           await db.get().collection(collection.USER_COLLECTION).updateOne({ _id: objectId(userId) }, {
                     $set: {
                         UserName: userDetails.UserName,
                         UserEmail: userDetails.UserEmail,

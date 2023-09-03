@@ -25,19 +25,55 @@
         </div>
         {{/if}}
         <hr>
-        
+  
         <div class="row ">
-            {{#each coverimg}}
+         
             <div class=" col-md-6 card mb-3 ">
-                <img class="card-img-top" src="/images/cover-Img/{{this.Img}}" alt="Card image cap">
-                {{this.position}}
+                <img class="card-img-top" src="/images/cover-Img/{{coverimg.Img}}" alt="Card image cap">
+                {{coverimg.position}}
             </div>
-            {{/each }} 
-            <h1>Edit</h1>
-           
-
         </div>
+
+          {{#if coverimg}}
+             <a class="btn btn-info btn-sm text-light" href="/admin/edit-CoverBanner/{{coverimg._id}}">Edit this
+                        banner</a>
+                   <button class="btn btn-danger btn-sm text-light" onclick="deleteBanner('{{coverimg._id}}')">Delete
+                        banner</button>
+           {{/if}}
     </section>
+
+    
+<script>
+
+
+    function deleteBanner(bannerId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    url: '/admin/delete-TopBanner/'+bannerId,
+                    success(response) {
+                        Swal.fire(
+                            'Deleted!',
+                            'Your Banner has been deleted.',
+                            'success'
+                        )
+                        location.reload()
+                    }
+                })
+
+            }
+        })
+
+    }
+</script>
 
 
 

@@ -172,7 +172,7 @@ module.exports = {
                         $set: { 'cartDetails.$.status': changes.status }
                     })
                 .then((response) => {
-                    resolve()
+                    resolve(response)
                 })
         })
     },
@@ -205,7 +205,7 @@ module.exports = {
             Count.PayPalCount = PayPalCount
             Count.TotalSales = TotalSales
             Count.TotalUsers = TotalUsers
-            // Count.TotalRevenue = Revenue[0].TotalAmount
+            Count.TotalRevenue = Revenue[0].TotalAmount
             resolve(Count)
         })
     },
@@ -455,136 +455,6 @@ module.exports = {
 
 
             resolve(monthlyGraph)
-        })
-    },
-    addNewCoupon: (CouponDetails) => {
-        CouponDetails.couponDiscount = parseInt(CouponDetails.couponDiscount)
-        CouponDetails.maxAmount = parseInt(CouponDetails.maxAmount)
-        CouponDetails.minSpend = parseInt(CouponDetails.minSpend)
-        CouponDetails.expiryDate = new Date(CouponDetails.expiryDate)
-        return new Promise(async (resolve, reject) => {
-            let coupon = await db.get().collection(collection.COUPON_COLLECTION).findOne({ couponCode: CouponDetails.couponCode })
-            if (coupon) {
-                resolve({ status: false })
-            } else {
-                let add = await db.get().collection(collection.COUPON_COLLECTION).insertOne(CouponDetails)
-                resolve({ status: true })
-            }
-
-
-        })
-    },
-    updateCoupon: (CouponDetails) => {
-        console.log("inside the helper");
-        console.log(CouponDetails);
-
-        return new Promise(async (resolve, reject) => {
-            let update = await db.get().collection(collection.COUPON_COLLECTION)
-                .updateOne(
-                    { _id: objectId(CouponDetails.id) },
-                    {
-                        $set: {
-                            couponCode: CouponDetails.couponCode,
-                            couponDescription: CouponDetails.couponDescription,
-                            couponDiscount: parseInt(CouponDetails.couponDiscount),
-                            maxAmount: parseInt(CouponDetails.maxAmount),
-                            minSpend: parseInt(CouponDetails.minSpend),
-                            expiryDate: new Date(CouponDetails.expiryDate)
-                        }
-                    }
-                )
-            resolve({ status: true })
-
-        })
-    },
-    deleteCoupon: (couponId) => {
-        console.log("insoide the helper", couponId.offerId);
-        return new Promise(async (resolve, reject) => {
-            let deleteCoupon = await db.get().collection(collection.COUPON_COLLECTION).deleteOne({ _id: objectId(couponId.offerId) })
-            resolve()
-        })
-
-    },
-    getActiveCoupons: () => {
-        return new Promise(async (resolve, reject) => {
-            let activeCoupons = await db.get().collection(collection.COUPON_COLLECTION)
-                .aggregate([
-                    {
-                        $match: {
-                            expiryDate: { $gte: new Date() }
-
-                        }
-                    },
-                    {
-                        $project:
-                        {
-
-                            expiryDate: { $dateToString: { format: "%d-%m-%Y ", date: "$expiryDate" } },
-                            couponCode: 1,
-                            maxAmount: 1,
-                            minSpend: 1,
-                            couponDescription: 1,
-                            couponDiscount: 1
-
-                        }
-                    }
-                ]).toArray()
-            resolve(activeCoupons)
-        })
-    },
-    getExpiredCoupons: () => {
-        return new Promise(async (resolve, reject) => {
-            let activeCoupons = await db.get().collection(collection.COUPON_COLLECTION)
-                .aggregate([
-                    {
-                        $match: {
-                            expiryDate: { $lt: new Date() }
-
-                        }
-                    },
-                    {
-                        $project:
-                        {
-
-                            expiryDate: { $dateToString: { format: "%Y-%m-%d ", date: "$expiryDate" } },
-                            couponCode: 1,
-                            maxAmount: 1,
-                            minSpend: 1,
-                            couponDescription: 1,
-                            couponDiscount: 1
-
-                        }
-                    }
-                ]).toArray()
-            resolve(activeCoupons)
-        })
-    },
-    getCouponDiscount: (couponCode) => {
-        return new Promise(async (resolve, reject) => {
-            let checkCoupon = await db.get().collection(collection.COUPON_COLLECTION).findOne({ couponCode: couponCode })
-            if (checkCoupon === null) {
-                checkCoupon = {}
-                checkCoupon.err = "Invalid Coupon Code"
-                checkCoupon.status = false
-                resolve(checkCoupon)
-            } else {
-                let checkDate = await db.get().collection(collection.COUPON_COLLECTION)
-                    .findOne({ _id: checkCoupon._id, expiryDate: { $gte: new Date() } })
-                    
-                if (checkDate === null) {
-                    checkDate = {}
-                    checkDate.err = "Coupon Expired"
-                    checkDate.status = false
-                    resolve(checkDate)
-                } else {
-                    response = {}
-                    response.status = true
-                    response.coupon = checkDate
-                    resolve(response)
-                }
-
-            }
-
         })
     }
 }

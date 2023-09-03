@@ -24,7 +24,6 @@
                                 <a href="#dashboad" class="active" data-toggle="tab"><i class="fa fa-dashboard"></i>
                                     Dashboard</a>
                                 <a href="#orders" data-toggle="tab"><i class="fa fa-cart-arrow-down"></i> Orders</a>
-                                <a href="#wallet" data-toggle="tab"><i class="fa fa-wallet"></i> Wallet</a>
                                 <a href="#payment-method" data-toggle="tab"><i class="fa fa-credit-card"></i> Payment
                                     Method</a>
                                 <a href="#address-edit" data-toggle="tab"><i class="fa fa-map-marker"></i> address</a>
@@ -47,18 +46,7 @@
                                             recent orders, manage your shipping and billing addresses and edit your
                                             password and account details.</p>
                                     </div>
-                                    <div class="myaccount-content">
-                                        <h3>Referral Code</h3>
-                                        <div class="welcome">
-                                            <p>Share this code to a new user and get a <i
-                                                    class="bi bi-currency-rupee"></i> 1000 as a referral bonus on their
-                                                Sign Up</p>
-                                            <span class="border border-danger p-2"
-                                                id="p1">{{userDetails.referralId}}</span><button
-                                                style="background-color: rgb(228,67,17); color: white;"
-                                                class="btn btn-sm ml-2" onclick="copyToClipboard('#p1')">Copy</button>
-                                        </div>
-                                    </div>
+                             
                                 </div>
                                 <!-- Single Tab Content End -->
                                 <!-- Single Tab Content Start -->
@@ -148,43 +136,7 @@
                                 </div>
                                 <!-- Single Tab Content End -->
                                 <!-- Single Tab Content Start -->
-                                <div class="tab-pane fade" id="wallet" role="tabpanel">
-                                    <div class="myaccount-content">
-                                        <div class="row">
-                                            <h3 class="col-md-9">Wallet</h3>
-                                            <h3 class="col-md-3 mr-auto">Balance:<i class="bi bi-currency-rupee"></i>
-                                                {{wallet.walletBalance}}</h3>
-                                        </div>
-
-
-                                        <div class="myaccount-table table-responsive ">
-                                            <table class="table table-bordered">
-                                                <thead class="thead-light">
-                                                    <tr>
-                                                        <th scope="col">#</th>
-                                                        <th scope="col">Date</th>
-                                                        <th scope="col">Title</th>
-                                                        <th scope="col">Transaction</th>
-                                                        <th scope="col">Amount</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {{#each wallet.walletTransaction}}
-                                                    <tr>
-                                                        <th scope="row" class="create_index"></th>
-                                                        <td>{{this.date}}</td>
-                                                        <td>{{this.title}}</td>
-                                                        <td>{{this.transaction}} ({{this.user}})</td>
-                                                        <td>{{this.amount}}</td>
-                                                    </tr>
-                                                    {{/each }}
-                                                </tbody>
-                                            </table>
-
-                                        </div>
-
-                                    </div>
-                                </div>
+                            
                                 <!-- Single Tab Content End -->
                                 <!-- Single Tab Content Start -->
                                 <div class="tab-pane fade" id="payment-method" role="tabpanel">

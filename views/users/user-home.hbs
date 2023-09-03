@@ -1,4 +1,4 @@
-<section class="bgStyle" style="background-image: url(./images/coverImg/cover.jpg);">
+<section class="bgStyle" style="background-image: url(./images/coverImg/{{coverImg.Img}});">
   <header class="NavBar">
     <div class="nameDiv"><a class="nameStyle" href="/">Aura</a></div>
     <nav class="styleNav">
@@ -13,8 +13,10 @@
                 <a href="/account"><i class="bi bi-person "></i></a>
                   {{/if}}
             </li>
+    
             <li><a href="/viewAll">Products</a></li>
-            <li><a href="/account">Orders</a></li>
+            <li><a href="/orderpage">Orders</a></li>
+            <li class="listStyle"> <a href="/wishlist">Wishlist</a></li>
          <li class="listStyle">
               {{#if headerDetails.wishlistCount}}
                             <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
@@ -91,10 +93,6 @@
                    {{else}}
                 <a href="/account"><i class="bi bi-person "></i></a>
                   {{/if}}
-
-         <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
-                 <a href="/account"><i class="bi bi-wallet2"></i></a>
-                      </div>
                         <div>
                          {{#if headerDetails.wishlistCount}}
                             <div class="same-style-2 same-style-2-white same-style-2-hover-black same-style-2-font-inc">
@@ -126,7 +124,7 @@
                                               {{#if headerDetails.cartProducts}}
                                                 id="cart-count">{{headerDetails.cartCount}}</span>
                                             <span class="cart-amount white"><i
-                                                    class="bi bi-currency-rupee"></i>{{headerDetails.total}}</span>
+                                                    class="bi bi-currency-rupee fs-6"></i>{{headerDetails.total}}</span>
                                         {{/if}} 
                                         </a>
                             </div>

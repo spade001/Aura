@@ -1,0 +1,91 @@
+  
+  <div class="my-account-wrapper pt-50 pb-120" style="">
+    <div class="container">
+
+  <div  id="orders" >
+                                    <div class="cart-main-area pt-0 pb-0">
+                                        <div class="container">
+                                            <h3 class="cart-page-title">Your Order items</h3>
+                                            <div class="row">
+                                                <div class="col-lg-12 col-md-12 col-sm-12 col-12">
+                                                    <form>
+
+                                                        <div
+                                                            class="table-content table-responsive cart-table-content d-none d-md-block">
+                                                            <table class="text-left">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>Date</th>
+                                                                        <th>Address</th>
+                                                                        <th>Bill Amount</th>
+                                                                        <th>Action</th>
+
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    {{#each orders}}
+                                                                    <tr>
+                                                                        <td class="product-name "><a href="#">
+                                                                                {{@index}}</a></td>
+                                                                        <td class="product-name text-left"><a href="#">
+                                                                                {{this.orderDate}}</a></td>
+                                                                        <td class="product-price-cart text-left"><span>
+                                                                                {{this.deliveryDetails.Name}} <br>
+                                                                                {{this.deliveryDetails.TownCity}}-{{this.deliveryDetails.State}}
+                                                                                <br>
+                                                                                {{this.deliveryDetails.Country}}-{{this.deliveryDetails.PostCode}}
+                                                                            </span></td>
+
+                                                                        <td class="product-subtotal ">
+                                                                            Rs.{{this.totalAmount}}</td>
+                                                                        <td class="product-wishlist-cart ">
+                                                                            <a href="/orderDetails/{{this._id}}">View
+                                                                                Order</a>
+
+                                                                        </td>
+                                                                    </tr>
+                                                                    {{/each }}
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        {{!-- dcksdncksdl --}}
+                                                        <div
+                                                            class="table-content table-responsive cart-table-content d-block d-md-none">
+                                                            
+                                                            {{#each orders}}
+                                                            <div
+                                                                style="">
+                                                                <div>
+                                                                    <span class="float-left ">{{@index}}</span><div class="float-right ">Date: {{this.orderDate}} </div> 
+                                                                </div><br>
+                                                                <p class="">
+                                                                    <p>Shipping Address</p>
+                                                                    {{this.deliveryDetails.Name}} <br>
+                                                                    {{this.deliveryDetails.TownCity}}-{{this.deliveryDetails.State}}
+                                                                    <br>
+                                                                    {{this.deliveryDetails.Country}}-{{this.deliveryDetails.PostCode}}
+
+                                                                </p>
+                                                                <div class=" mb-5 " >
+                                                                    <div class="col-6" >
+                                                                        Rs.{{this.totalAmount}}</div>
+                                                                    <div class="col-6">
+                                                                        <a class="btn btn-sm btn-danger" href="/orderDetails/{{this._id}}">View
+                                                                            Order</a>
+
+                                                                    </div>
+                                                                    
+                                                                </div>
+
+                                                            </div>
+                                                            {{/each }}
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        
+                              <hr>

@@ -3,8 +3,7 @@ var router = express.Router();
 const userHelpers = require('../helpers/user-helpers')
 require('dotenv').config()
 const {
-  getLoginRegisterPage, getLogin, logOut, getOtpLogin, enterOtpPage, verifyMobileNumber, SignUpPage, postSignUp, getReferralPage,
-  verifyReferral, login, landingPage, viewAllProducts, viewAllByCategory, viewAll_ByPriceRange, viewAllProducts_verifiedUser, productDetails,
+  getLoginRegisterPage, getLogin, logOut, getOtpLogin, enterOtpPage, verifyMobileNumber, SignUpPage, postSignUp, login, landingPage, viewAllProducts, viewAllByCategory, viewAll_ByPriceRange, viewAllProducts_verifiedUser, productDetails,
   productDetails_verifiedUser, userAccount, getAddAddressPage, addNewAddress, getEditAddressPage, getAddressDetails, updateAddress, deleteAddress,
   updateProfile, viewCartPage, addToCart, viewWishlist, addToWishList, removeFromWishlist, addToCart_Wishlist, changeProductQty, removeCartProduct,
   proceedToCheckOut, placeOrder, getPaymentFailedPage, verifyPayment, clearCart, orderSuccessPage, viewOrders, viewOrderDetails, cancelOrder, returnOrder, searchBar,orderSeperatePage, errorPage
@@ -33,8 +32,7 @@ router.get('/logOut', logOut);
 // router.post('/verifyOtp', verifyOTP);
 router.get('/signUp', SignUpPage);
 router.post('/signUp', postSignUp)
-router.get('/enterCoupon', getReferralPage);
-router.post('/verifyReferralID', verifyReferral);
+
 
 //User Account Routes
 router.get('/account', verifyUser, userAccount);

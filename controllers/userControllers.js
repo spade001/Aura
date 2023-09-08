@@ -124,21 +124,6 @@ module.exports = {
             }
         })
     },
-    getReferralPage: (req, res, next) => {
-        res.render('users/enterCoupon', { referralIdError: req.session.referralIdError })
-        req.session.referralIdError = null
-    },
-    verifyReferral: async (req, res, next) => {
-        let apply = await userHelpers.applyReferral(req.body.referralId, req.session.user._id)
-        if (apply.status) {
-            res.redirect('/');
-        } else {
-            req.session.referralIdError = "The Entered referral code is Invalid"
-            res.redirect('/enterCoupon')
-        }
-    },
-
-
     landingPage: async function (req, res, next) {
         try {
             categoryProducts={}

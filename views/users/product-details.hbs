@@ -1,3 +1,32 @@
+<style>
+    #id_showsize{
+  height: 40px;
+  border: none;
+  overflow: hidden;
+}
+#id_showsize::-moz-focus-inner {
+  border: 0;
+}
+#id_showsize:focus {
+  outline: none;
+  
+}
+#id_showsize option{
+  width: 28px;
+  font-size: 1.2em;
+  padding: 2px 0;
+  text-align: center;
+  margin-right: 8px;
+  display: inline-block;
+  cursor: pointer;
+  border:rgb(0, 0, 0) solid 1px;
+  border-radius: 5px;
+  color: rgb(0, 0, 0);
+}
+</style>
+
+
+
 <div class="breadcrumb-area bg-gray menuBarTop">
     <div class="container">
         <div class="breadcrumb-content text-center">
@@ -114,11 +143,32 @@
 
 
                     <div class="pro-details-quality">
-                        <h3 class="text-success">{{product.totalDiscount}} % off</h3><span> On this product</span>
+                        <h3 class="text-success">{{product.totalDiscount}} % off</h3>
+                    </div>
+
+                    {{#if shoesizeoption}}
+                    <div >
+                        <p>size:</p>
+                              <select name="work_days" id="id_showsize" multiple>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                  <option value="" selected hidden="true"></option>
+                             
+                              </select>
+                    </div>
+                    {{else}}
+                     <p>size:none</p>
+                       <select name="work_days" id="id_showsize" multiple>
+                                  <option value="" selected hidden="true"></option>
+                              </select>
+                     {{/if}}
+                    <div class="product-details-meta">
+                         <div class="pro-details-quality">
+                       <span> On this product</span>
                         
                     </div>
-                    <div class="product-details-meta">
-
                         <ul>
                             <li><span>Brand:</span><a href="#">{{product.brand}}</a></li>
                             <li><span>Category: </span> <a href="#">{{categoryName.category}}</a></li>
@@ -344,8 +394,12 @@
 
 <script>
     function addToCartDetails(proId) {
+        var getsize=document.getElementById("id_showsize").value
         $.ajax({
             url: '/add-to-cart/' + proId,
+               data: {
+                size:getsize
+            },
             method: 'get',
             success: (response) => {
                 if (response.status) {

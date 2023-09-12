@@ -430,24 +430,41 @@ module.exports = {
     },
 
     //here we add to cart 
-    addToCart: (productId, userId) => {
+    addToCart: (productId,userId,size) => {
+         var Size=size
+         proid=objectId(productId)
         let proObj = {
             item: objectId(productId),
-            quantity: 1
+            quantity: 1,
+            itemsize:Size
         }
         return new Promise(async (resolve, reject) => {
             let userCart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: objectId(userId) })
             if (userCart) {
                 let proExist = userCart.products.findIndex(product => product.item == productId)
-                if (proExist != -1) {  // if product exists
+                let prosize= userCart.products.findIndex(product =>product.itemsize == Size)
+
+                // let itemSize=userCart.products.findIndex(product =>product.item == proid)
+                console.log("+++++++++++++++",prosize);
+                if (proExist != -1 &&  prosize != -1 ) {  // if product exists
                     db.get().collection(collection.CART_COLLECTION)
-                        .updateOne({ user: objectId(userId), 'products.item': objectId(productId) },
-                            {
+                        .updateOne({ user: objectId(userId),"products":{$elemMatch:{"item":objectId(productId),"itemsize":Size}}},
+                          
+                           {
                                 $inc: { 'products.$.quantity': 1 }   // $ in between because of incrementing in an array
                             }
-                        ).then(() => {
-                            resolve()
+                        ).then((response) => {
+                           console.log("rexxxxxxxxxxxxxxxxxxx",response);
+                           if(response.modifiedCount==0){
+                            db.get().collection(collection.CART_COLLECTION)
+                        .updateOne({ user: objectId(userId) },
+                            {
+                                $push: { products: proObj }
+                            })
+                           }
+                           resolve()
                         })
+                    
                 } else {
                     db.get().collection(collection.CART_COLLECTION)
                         .updateOne({ user: objectId(userId) },

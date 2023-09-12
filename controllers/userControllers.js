@@ -10,6 +10,7 @@ require('dotenv').config()
 
 
 const paypal = require('paypal-rest-sdk');
+const nodemon = require('nodemon');
 paypal.configure({
     'mode': 'sandbox', //sandbox or live
     'client_id': process.env.SANDBOX_ID,
@@ -174,13 +175,18 @@ module.exports = {
     },
     productDetails: async (req, res, next) => {
         try {
+           
             let productId = req.params.id   //to get the clicked item id
             const headerDetails = await userHelpers.getHeaderDetails(req.session.user?._id)
             let product = await productHelpers.getProductDetails(productId)
             let category = product.category
             let categoryName = await productHelpers.getProductCategory(category)   // for showing top of the page
             let categoryTitle = await productHelpers.getCategoryProducts(category) //for showing down side of the page
-            res.render('users/product-details', { product, categoryTitle, categoryName, headerDetails });
+            let showProductRadio=await product.flexRadioDefault
+             if (await showProductRadio=="shoesizeoption"){
+                var shoesizeoption=true
+             }
+            res.render('users/product-details', { product, categoryTitle, categoryName, headerDetails,shoesizeoption});
         } catch (err) {
             console.log(err);
             res.redirect('/userError');
@@ -192,9 +198,12 @@ module.exports = {
         const headerDetails = await userHelpers.getHeaderDetails(req.session.user?._id)
         productHelpers.getProductDetails(productId).then((product) => {
             let category = product.category
+            if( product.flexRadioDefault="shoesizeoption"){
+                var shoesizeoption=true
+            }
             productHelpers.getProductCategory(category).then((categoryName) => {
                 productHelpers.getCategoryProducts(category).then((categoryTitle) => {
-                    res.render('users/product-details', { product, categoryTitle, categoryName, headerDetails });
+                    res.render('users/product-details', { product, categoryTitle, categoryName, headerDetails, shoesizeoption});
                 })
             })
         })
@@ -265,7 +274,15 @@ module.exports = {
         if (req.session.user == null) {
             res.json({ status: false })
         } else {
-            userHelpers.addToCart(req.params.id, req.session.user._id).then(async () => {
+            var size
+            console.log(")))))))))))))))))))))",req.query.size);
+            if(req.query.size){
+                 size=req.query.size
+            }else{
+                size="none"
+            }
+            console.log("...................",size);
+            userHelpers.addToCart(req.params.id, req.session.user._id,size).then(async () => {
                 const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
                 userHelpers.getCartCount(req.session.user._id).then((response) => {
                     cartCount = response

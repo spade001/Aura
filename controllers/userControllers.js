@@ -265,7 +265,9 @@ module.exports = {
         let userId = req.session.user._id                                              //also need to pass to hbs
         const headerDetails = await userHelpers.getHeaderDetails(req.session.user._id)
         userHelpers.getCartProducts(req.session.user._id).then(async (products) => {
-            if (products) { res.render('users/cart', { products, userId, headerDetails }); }
+            if (products) { 
+                res.render('users/cart', { products, userId, headerDetails });
+             }
             else { res.render('users/cartIsEmpty', { headerDetails }); }
             //if no products in cart render cart empty page
         })

@@ -432,11 +432,14 @@ module.exports = {
     //here we add to cart 
     addToCart: (productId,userId,size) => {
          var Size=size
-         proid=objectId(productId)
+         var proid=objectId(productId)
+         var unique=proid+Size
+         console.log(unique);
         let proObj = {
             item: objectId(productId),
             quantity: 1,
-            itemsize:Size
+            itemsize:Size,
+            uniquekey:unique
         }
         return new Promise(async (resolve, reject) => {
             let userCart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: objectId(userId) })
@@ -502,7 +505,10 @@ module.exports = {
                         $project: {
                             user: 1,
                             item: '$products.item',
-                            quantity: '$products.quantity'
+                            quantity: '$products.quantity',
+                            itemsize: '$products.itemsize',
+                            uniquekey:'$products.uniquekey'
+                            
                         }
                     },
                     {
@@ -515,18 +521,19 @@ module.exports = {
                     },
                     {
                         $project: {
-                            item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+                            item: 1, quantity: 1,itemsize:1,uniquekey:1, product: { $arrayElemAt: ['$product', 0] }
                         }
                     },
                     {
                         $project: {
-                            item: 1, quantity: 1, product: 1, productTotal: { $sum: { $multiply: ['$quantity', '$product.offerPrice'] } }
+                            item: 1, quantity: 1,itemsize:1,uniquekey:1, product: 1, productTotal: { $sum: { $multiply: ['$quantity', '$product.offerPrice'] } }
                         }
                     }
 
                 ]).toArray()
             if (products.length > 0) {
                 resolve(products)
+                console.log(";;;;;;;;;;;;",products);
             } else { resolve() }
 
 
@@ -603,6 +610,7 @@ module.exports = {
 
     changeProductQuantity: (details) => {
         details.count = parseInt(details.count)
+  
         return new Promise((resolve, reject) => {
             if (details.count == -1 && details.quantity == 1) {
                 db.get().collection(collection.CART_COLLECTION)
@@ -614,12 +622,16 @@ module.exports = {
                         })
             } else {
                 db.get().collection(collection.CART_COLLECTION)
-                    .updateOne({ _id: objectId(details.cart), 'products.item': objectId(details.product) },
+                    .updateOne({ _id: objectId(details.cart),"products":{$elemMatch:{"item":objectId(details.product),"itemsize": {$eq:details.size}}} },
                         {
                             $inc: { 'products.$.quantity': details.count }
                         }).then((response) => {
                             resolve({ status: true })
-                        })
+                            console.log("ressssspoooooooo",response);
+                        }).catch((error) => { // Add this catch block
+                            console.error('Errorrrrrrrrrrrrr:', error);
+                            reject(error);
+                        });
             }
 
 
@@ -718,11 +730,12 @@ module.exports = {
         })
     },
     removeProduct: (details) => {  // we need cart id and product id to delete
+        console.log("nnnnnnnnnn",details);
         return new Promise((resolve, reject) => {
             db.get().collection(collection.CART_COLLECTION)
                 .updateOne({ _id: objectId(details.cart) },
                     {
-                        $pull: { products: { item: objectId(details.product) } }
+                        $pull: { products: { uniquekey: details.product } }
                     }).then((response) => {
                         resolve({ removeProduct: true })
                     })

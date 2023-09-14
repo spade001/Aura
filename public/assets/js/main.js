@@ -1159,9 +1159,10 @@ function addToCart(proId) {
         }
     })
 }
-function changeQuantity(cartId, proId, userId, price, count) {
-    let totalPrice = parseInt(document.getElementById(price).innerHTML)
-    let quantity = parseInt(document.getElementById(proId).innerHTML)
+function changeQuantity(cartId, proId, userId, price, count,itemsize,uniquekey) {
+    let totalPrice = parseInt(document.getElementById(price+uniquekey).innerHTML)
+    let totalPrice2=parseInt(document.getElementById(uniquekey+price).innerHTML)
+    let quantity = parseInt(document.getElementById(uniquekey).innerHTML)
     count = parseInt(count)
     priceInt = parseInt(price)
     if (count == -1 && quantity == 1) {
@@ -1184,8 +1185,11 @@ function changeQuantity(cartId, proId, userId, price, count) {
                         count: count,
                         quantity: quantity,
                         price: priceInt,
-                        totalPrice: totalPrice
+                        totalPrice: totalPrice,
+                        size:itemsize
+                   
                     },
+                    
                     method: 'post',
                     success: (response) => {
                         if (response.removeProduct) {
@@ -1206,7 +1210,7 @@ function changeQuantity(cartId, proId, userId, price, count) {
                                 document.getElementById(price).innerHTML = totalPrice + priceInt
                             } else if (count < 0) {
                                 document.getElementById(price + price).innerHTML = totalPrice - priceInt
-                                document.getElementById(price).innerHTML = totalPrice - priceInt
+                                document.getElementById(price ).innerHTML = totalPrice - priceInt
                             }
 
                         }
@@ -1215,6 +1219,8 @@ function changeQuantity(cartId, proId, userId, price, count) {
             }
         })
     } else {
+        console.log(itemsize);
+      
         $.ajax({
             url: '/change-product-quantity',
             data: {
@@ -1224,24 +1230,27 @@ function changeQuantity(cartId, proId, userId, price, count) {
                 count: count,
                 quantity: quantity,
                 price: price,
-                totalPrice: totalPrice
+                totalPrice: totalPrice,   
+                size:itemsize
             },
             method: 'post',
             success: (response) => {
+             
                 if (response.removeProduct) {
                     alert("Product Removed from Cart")
                     location.reload()
                 } else {
-                    document.getElementById(proId + proId).innerHTML = quantity + count
-                    document.getElementById(proId).innerHTML = quantity + count
+                    
+                    document.getElementById(uniquekey + uniquekey ).innerHTML = quantity + count
+                    document.getElementById(uniquekey ).innerHTML = quantity + count
                     document.getElementById('total').innerHTML = response.total
                     document.getElementById('g-total').innerHTML = response.total
                     if (count > 0) {
-                        document.getElementById(price + price).innerHTML = totalPrice + priceInt
-                        document.getElementById(price).innerHTML = totalPrice + priceInt
+                        document.getElementById( uniquekey + price).innerHTML = totalPrice + priceInt
+                        document.getElementById(price + uniquekey).innerHTML = totalPrice + priceInt
                     } else if (count < 0) {
-                        document.getElementById(price + price).innerHTML = totalPrice - priceInt
-                        document.getElementById(price).innerHTML = totalPrice - priceInt
+                        document.getElementById(uniquekey + price ).innerHTML = totalPrice - priceInt
+                        document.getElementById(price + uniquekey).innerHTML = totalPrice - priceInt
                     }
                 }
             }

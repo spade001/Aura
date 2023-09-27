@@ -177,12 +177,13 @@
                     </div>
                     <div class="pro-details-action-wrap">
                         <div class="pro-details-action">
-                            <a style="background-color:#5b7f9e; " class="btn" title="Add to Cart"
-                                onclick="addToCartDetails('{{product._id}}')">Add To Cart
-                            </a>
+                     
+                            <button style="background-color:#5b7f9e; " class="btn" title="Add to Cart"
+                                onclick="addToCartDetails('{{product._id}}')">Add To Cart</button>
                         </div>
                         <div class="pro-details-action">
-                            <a title="Add to Wishlist" onclick="addToWishList('{{product._id}}')"><i class="bi bi-heart fa-sm"></i></a>
+                    
+                          <button class="btn social" title="Add to Wishlist" onclick="addToWishList('{{product._id}}')"><i class="bi bi-heart fa-sm"></i></button>
                             <a class="social" title="Social" href="#"><i class="bi bi-share"></i></a>
                             <div class="product-dec-social">
                                 <a class="facebook" title="Facebook" href="#"><i class="bi bi-facebook"></i></a>
@@ -417,7 +418,7 @@
                         showConfirmButton: false,
                         timer: 1500
                     })
-                    location.reload()
+                   
                 } else {
                     Swal.fire({
                         title: 'Please Login ',

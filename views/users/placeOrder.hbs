@@ -127,7 +127,7 @@
                                 <div class="col-lg-6">
                                     <div class="billing-info mb-20 form-floating">
                                     
-                                    <select name="State" class="form-select" id="floatingSelect" aria-label="State">
+                                    <select name="State" class="form-select" id="floatingSelect" aria-label="State" required>
                                         <option></option>
                         <option value="Andra Pradesh">Andra Pradesh</option>
                         <option value="Arunachal Pradesh">Arunachal Pradesh</option>
@@ -141,7 +141,7 @@
                         <option value="Jammu and Kashmir">Jammu and Kashmir</option>
                         <option value="Jharkhand">Jharkhand</option>
                         <option value="Karnataka">Karnataka</option>
-                        <option value="Kerala">Kerala</option>
+                        <option value="Kerala" selected>Kerala</option>
                         <option value="Madya Pradesh">Madya Pradesh</option>
                         <option value="Maharashtra">Maharashtra</option>
                         <option value="Manipur">Manipur</option>
@@ -165,7 +165,7 @@
                                 <div class="col-lg-6">
                                     <div class="billing-info mb-20 form-floating">
                                         <input name="Country" placeholder="." type="text" class="form-control"
-                                            id="Country" required>
+                                            id="Country" value="India" readonly>
                                         <label for="Country">Country</label>
                                     </div>
                                 </div>
@@ -197,26 +197,7 @@
                     <div class="col-lg-6">
                         <div class="your-order-area">
                             <div>
-                                <div class="title-wrap">
-                                    <h3 class="cart-bottom-title section-bg-gray">Use Coupon Code</h3>
-                                </div>
-                                <div class="discount-code">
-                                    <p>Enter your coupon code if you have one.
-                                        <span class="text-danger font-weight-bold" id="error"></span>
-                                        <span class="text-success font-weight-bold" id="cname"></span>
-                                    </p>
-                                    <form>
-                                        <input type="text" class="border " value="" id="couponDiscount"
-                                            name="couponCode">
-                                        <button onclick="applyCoupon()" id="add"
-                                            class="cart-btn-2 float-right mt-2 mb-2 btn btn-outline-success btn-sm ">Apply
-                                            Coupon</button>
-                                        <button onclick="removeCoupon()" id="remove" style="display:none ;"
-                                            class="cart-btn-2 float-right mt-2 mb-2 btn btn-outline-danger btn-sm ">Remove
-                                            Coupon</button>
-                                    </form>
-                                </div>
-                            </div>
+                          
 
                             <h3>Your order</h3>
                             <div class="your-order-wrap gray-bg-4">
@@ -229,7 +210,7 @@
                                     <div class="your-order-middle">
                                         <ul>
                                             {{#each products}}
-                                            <li>{{this.product.title}} X {{quantity}} <span>Rs. {{this.productTotal}}
+                                            <li>{{this.product.title}} X {{quantity}} &nbsp; size:{{itemsize}} <span>Rs. {{this.productTotal}}
                                                 </span></li>
                                             {{/each}}
 
@@ -242,18 +223,8 @@
                                             </li>
                                         </ul>
                                     </div>
-                                    <div class="your-order-info order-shipping">
-                                        <ul>
-                                            <li>Apply Coupon <p class="text-success" id="discount">0 </p>
-                                            </li>
-                                            <li class="text-success" id="offerDetail"></li>
-                                        </ul>
-                                    </div>
-                                    <div class="your-order-info order-total">
-                                        <ul>
-                                            <li>Total <span id="total">{{headerDetails.total}} </span></li>
-                                        </ul>
-                                    </div>
+                                 
+                               
                                 </div>
                                 <div class="payment-method">
                                     <div class="pay-top sin-payment">
@@ -277,7 +248,7 @@
                                                 the payment reference.</p>
                                         </div>
                                     </div>
-                                    <div class="pay-top sin-payment sin-payment-3">
+                                    {{!-- <div class="pay-top sin-payment sin-payment-3">
                                         <input id="payment-method-4" class="input-radio" type="radio" value="PAYPAL"
                                             name="payment_method">
                                         <label for="payment-method-4">PayPal <img alt=""
@@ -286,7 +257,7 @@
                                         <div class="payment-box payment_method_bacs">
                                             <p>Paypal</p>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                             <div class="Place-order">
@@ -331,10 +302,10 @@
                     
                     razorpayPayment(response)
                 }
-                else if (response.payPal) {
+                {{!-- else if (response.payPal) {
                     console.log(response)
                     location.replace(response.linkto)
-                }
+                } --}}
             }
         })
     })

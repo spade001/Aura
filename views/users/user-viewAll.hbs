@@ -269,7 +269,7 @@
                                                 <button title="Quick View" data-toggle="modal"
                                                     data-target="#exampleModal{{this._id}}"><i
                                                         class="bi bi-arrows-fullscreen"></i></button>
-                                                <button title="Compare"><i class="bi bi-arrow-clockwise"></i></button>
+                                              
                                             </div>
                                         </div>
                                         <div class="product-content-wrap-2 text-center">
@@ -366,7 +366,7 @@
                                                         class="bi bi-cart2"></i></button>
                                                 <button onclick="addToWishList('{{this._id}}')" title="Wishlist"><i
                                                         class="bi bi-heart fa-sm"></i></button>
-                                                <button title="Compare"><i class="bi bi-arrow-clockwise"></i></button>
+                                               
                                             </div>
                                         </div>
                                     </div>
@@ -430,18 +430,18 @@
                     <!-- /fillter -->
                     <div class="fillter">
                         <h4 class="sidebar-widget-title "><b>Price Filter</b> </h4>
-                        <span>Range: <i class="bi bi-currency-rupee"></i> 10,000 - 300,000</span>
+                        <span>Range: <i class="bi bi-currency-rupee"></i> 500 - 300,000</span>
                         <form action="/viewAllByRange" method="get">
                             <section class="range-slider" id="facet-price-range-slider"
                                 data-options='{"output":{"prefix":""},"maxSymbol":""}'>
                                 {{#if range}}
-                                <input name="range1" value="{{range.min}}" min="10000" max="300000" step="1"
+                                <input name="range1" value="{{range.min}}" min="500" max="300000" step="1"
                                     type="range">
-                                <input name="range2" value="{{range.max}}" min="10000" max="300000" step="1"
+                                <input name="range2" value="{{range.max}}" min="500" max="300000" step="1"
                                     type="range">
                                 {{else}}
-                                <input name="range1" value="10000" min="10000" max="300000" step="1" type="range">
-                                <input name="range2" value="300000" min="10000" max="300000" step="1" type="range">
+                                <input name="range1" value="500" min="500" max="300000" step="1" type="range">
+                                <input name="range2" value="300000" min="500" max="300000" step="1" type="range">
                                 {{/if}}
                             </section>
                             <button type="submit " class="btn btn-dark text-light btn-sm">Filter</button>
@@ -647,23 +647,12 @@
 
                             
                             <div class="pro-details-action-wrap">
-                                <div class="pro-details-add-to-cart">
-                                    <button title="Add to Cart" onclick="addToCart('{{this._id}}')">Add To Cart </button>
+                                <div class="pro-details-add-to-cart ">
+                                    <button class="btn btn-primary" title="Add to Cart" onclick="addToCart('{{this._id}}')">Add To Cart </button>
                                 </div>
                                 <div class="pro-details-action">
-                                    <button title="Add to Wishlist" onclick="addToWishList('{{this._id}}')"><i class="icon-heart"></i></button>
-                                    <a title="Add to Compare" href="#"><i class="icon-refresh"></i></a>
-                                    <a class="social" title="Social" href="#"><i class="icon-share"></i></a>
-                                    <div class="product-dec-social">
-                                        <a class="facebook" title="Facebook" href="#"><i
-                                                class="icon-social-facebook"></i></a>
-                                        <a class="twitter" title="Twitter" href="#"><i
-                                                class="icon-social-twitter"></i></a>
-                                        <a class="instagram" title="Instagram" href="#"><i
-                                                class="icon-social-instagram"></i></a>
-                                        <a class="pinterest" title="Pinterest" href="#"><i
-                                                class="icon-social-pinterest"></i></a>
-                                    </div>
+                                    <button class="btn" title="Add to Wishlist" onclick="addToWishList('{{this._id}}')"><i class="bi bi-heart"></i></button>
+                            
                                 </div>
                             </div>
                         </div>

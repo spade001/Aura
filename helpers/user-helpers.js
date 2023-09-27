@@ -445,7 +445,7 @@ module.exports = {
             let userCart = await db.get().collection(collection.CART_COLLECTION).findOne({ user: objectId(userId) })
             if (userCart) {
                 let proExist = userCart.products.findIndex(product => product.item == productId)
-                let prosize= userCart.products.findIndex(product =>product.itemsize == Size)
+                let prosize= userCart.products.findIndex(product =>product.uniquekey == unique)
 
                 // let itemSize=userCart.products.findIndex(product =>product.item == proid)
                 console.log("+++++++++++++++",prosize);
@@ -458,13 +458,7 @@ module.exports = {
                             }
                         ).then((response) => {
                            console.log("rexxxxxxxxxxxxxxxxxxx",response);
-                           if(response.modifiedCount==0){
-                            db.get().collection(collection.CART_COLLECTION)
-                        .updateOne({ user: objectId(userId) },
-                            {
-                                $push: { products: proObj }
-                            })
-                           }
+                          
                            resolve()
                         })
                     
@@ -556,7 +550,8 @@ module.exports = {
                         $project: {
                             user: 1,
                             item: '$products.item',
-                            quantity: '$products.quantity'
+                            quantity: '$products.quantity',
+                            size:'$products.itemsize'
                         }
                     },
                     {
@@ -569,22 +564,22 @@ module.exports = {
                     },
                     {
                         $project: {
-                            item: 1, quantity: 1, product: { $arrayElemAt: ['$product', 0] }
+                            item: 1, quantity: 1,size:1, product: { $arrayElemAt: ['$product', 0] }
                         }
                     },
                     {
                         $project: {
-                            item: 1, quantity: 1, product: 1, productTotal: { $sum: { $multiply: ['$quantity', '$product.offerPrice'] } }
+                            item: 1, quantity: 1,size:1, product: 1, productTotal: { $sum: { $multiply: ['$quantity', '$product.offerPrice'] } }
                         }
                     },
                     {
                         $project: {
-                            item: 1, quantity: 1, product: 1, productTotal: 1, applicableCouponDiscount: { $round: [{ $multiply: [{ $divide: ['$productTotal', cartTotal] }, couponApplied] }] }
+                            item: 1, quantity: 1,size:1, product: 1, productTotal: 1, applicableCouponDiscount: { $round: [{ $multiply: [{ $divide: ['$productTotal', cartTotal] }, couponApplied] }] }
                         }
                     },
                     {
                         $project: {
-                            item: 1, quantity: 1, product: 1, productTotal: 1, applicableCouponDiscount: 1, productNetTotal: { $subtract: ["$productTotal", "$applicableCouponDiscount"] }
+                            item: 1, quantity: 1,size:1, product: 1, productTotal: 1, applicableCouponDiscount: 1, productNetTotal: { $subtract: ["$productTotal", "$applicableCouponDiscount"] }
                         }
                     }
 

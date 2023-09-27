@@ -100,7 +100,27 @@
                                 <td class="text-left">{{this.cartDetails.product.brand}} </td>
                                 {{!-- 7 --}}
                                 <td class="text-left ">{{this.cartDetails.product.color}}</td>
-                                <td class="text-right">{{this.cartDetails.quantity}}</td>
+                                <td class="text-right">
+                           
+                                       {{this.cartDetails.quantity}}
+                                            &nbsp; <span class="bg-info">
+                                    {{#isEqual this.cartDetails.size 'none'}}
+                                           
+                                    {{/isEqual}}
+                                      {{#isEqual this.cartDetails.size 6}}
+                                         size:6
+                                    {{/isEqual}}
+                                      {{#isEqual this.cartDetails.size 7}}
+                                         size:7
+                                    {{/isEqual}}
+                                      {{#isEqual this.cartDetails.size 8}}
+                                         size:8
+                                    {{/isEqual}}
+                                   {{#isEqual this.cartDetails.size 9}}
+                                         size:9
+                                    {{/isEqual}}
+                                 </span>
+                                    </td>
                                 <td class="text-right">
 
                                     <select onchange="changeStatus('{{this.cartDetails.item}}','{{this.orderId}}')"

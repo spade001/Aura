@@ -150,6 +150,7 @@ module.exports = {
         const range = req.session.range
         req.session.productsTemp = null
         req.session.range = null
+        console.log("rrrrrrrrrrrrr",range);
         const headerDetails = await userHelpers.getHeaderDetails(req.session.user?._id)
         res.render('users/user-viewAll', { products, headerDetails, range })
     },

@@ -3,7 +3,6 @@ var router = express.Router();
 const userHelpers = require('../helpers/user-helpers')
 const productHelpers = require('../helpers/product-helpers');
 const categoryHelpers = require('../helpers/category-helpers');
-const otpHelpers = require("../helpers/otp-helpers")
 const wishlistHelper = require("../helpers/wishList-helper")
 const { response } = require('express');
 require('dotenv').config()  
@@ -63,53 +62,6 @@ module.exports = {
     },
 
     
-    // getOtpLogin: (req, res, next) => {
-    //     res.render('users/otpLogin', { mobileError: req.session.mobileError });
-    //     req.session.mobileError = null;
-    // },
-    // verifyMobileNumber: (req, res, next) => {
-    //     userHelpers.verifyMobile(req.body.mobile).then((response) => {
-    //         if (response.status == false) {
-    //             req.session.mobileError = "Please Enter a Registered Mobile Number! ";
-    //             res.redirect('/otpLogin');
-    //         } else if (response.active == false) {
-    //             req.session.mobileError = "Your account is Blocked!";
-    //             res.redirect('/otpLogin');
-    //         } else {
-    //             req.session.mobileNumber = req.body.mobile
-    //             mobile = `+91${req.body.mobile}`
-    //             otpHelpers.sendOTP(mobile).then((data) => {
-    //                 res.render('users/enterOtp')
-    //             })
-    //         }
-    //     })
-    //     //////////////////////////
-    //     // res.render('users/enterOtp') //bypass otp
-    // },
-    // enterOtpPage: (req, res, next) => {
-    //     res.render('users/enterOtp', { otpError: req.session.otpError })
-    //     req.session.otpError = null;
-    // },
-    // verifyOTP: (req, res, next) => {
-    //     let number = (req.body.one + req.body.two + req.body.three + req.body.four + req.body.five + req.body.six)
-    //     OTP = (number)
-    //     otpHelpers.verifyOTP(OTP).then(async (response) => {
-    //         if (response.status) {
-    //             mobileNumber = req.session.mobileNumber
-    //             req.session.mobileNumber = null
-    //             req.session.user = await userHelpers.otpLogin(mobileNumber)
-    //             res.redirect('/'); ``
-    //         }
-    //         else {
-    //             req.session.otpError = "Invalid OTP";
-    //             res.redirect('/otpVerify');
-    //         }
-    //     })
-    //     //res.redirect('/'); //bypass otp
-
-    // },
-
-
     SignUpPage: async (req, res, next) => {
         let headerDetails = await userHelpers.getHeaderDetails(req.session.user?._id)
         res.render('users/signUp', { headerDetails })
@@ -350,11 +302,11 @@ module.exports = {
         res.render('users/placeOrder', { products, headerDetails, address })
     },
     placeOrder: async (req, res) => {
-        const couponApplied = parseInt(req.body.couponApplied)
+        // const couponApplied = parseInt(req.body.couponApplied)
         const products = await userHelpers.getCartProductsList(req.body.userId)
         const totalPrice = await userHelpers.getTotalAmount(req.body.userId)
-        const cartDetailsWithOffer = await userHelpers.getCartProductsWithOffer(req.body.userId, totalPrice, req.body.couponApplied) //passing for implementing the coupon discount product level
-        userHelpers.placeOrder(req.body, products, cartDetailsWithOffer, totalPrice, couponApplied).then((orderId) => {
+        const cartDetailsWithOffer = await userHelpers.getCartProductsWithOffer(req.body.userId, totalPrice) //passing for implementing the coupon discount product level
+        userHelpers.placeOrder(req.body, products, cartDetailsWithOffer, totalPrice).then((orderId) => {
             if (req.body['payment_method'] === 'COD') {
                 cartCount = 0
                 response.orderId = orderId
@@ -362,55 +314,6 @@ module.exports = {
                 res.json(response)
             }
         })
-        //     } else if (req.body['payment_method'] === 'ONLINE') {
-        //         userHelpers.generateRazorpay(orderId, totalPrice).then((response) => {
-        //             response.razor = true
-        //             response.RAZORPAY_FAIL_PAGE = process.env.RAZORPAY_FAIL_PAGE
-        //             response.userName = req.session.user.UserName
-        //             response.userMobile = req.session.user.MobileNo
-        //             response.userEmail = req.session.user.UserEmail
-        //             res.json(response)
-        //         })
-        //     } else if (req.body['payment_method'] === 'PAYPAL') {
-        //         let payment = {
-        //             "intent": "authorize",
-        //             "payer": {
-        //                 "payment_method": "paypal"
-        //             },
-        //             "redirect_urls": {
-        //                 "return_url": process.env.PAYPAL_SUCCESS_URL + orderId,
-        //                 "cancel_url": process.env.RAZORPAY_FAIL_PAGE + orderId
-        //             },
-        //             "transactions": [{
-        //                 "amount": {
-        //                     "total": totalPrice,
-        //                     "currency": "USD"
-        //                 },
-        //                 "description": orderId
-        //             }]
-        //         }
-        //         userHelpers.createPay(payment).then((transaction) => {
-        //             var id = transaction.id;
-        //             var links = transaction.links;
-        //             var counter = links.length;
-        //             while (counter--) {
-        //                 if (links[counter].rel == 'approval_url') {
-        //                     transaction.payPal = true
-        //                     transaction.linkto = links[counter].href
-        //                     transaction.orderId = orderId
-        //                     res.json(transaction)
-
-        //                 }
-        //             }
-        //         })
-        //             .catch((err) => {
-        //                 console.log(err);
-        //                 res.redirect('/err');
-        //             });
-
-
-        //     }
-        // })
     },
     getPaymentFailedPage: async (req, res) => {
         const deletePendingOrder = await userHelpers.deletePendingOrder(req.params.orderId)

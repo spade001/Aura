@@ -6,17 +6,7 @@ var objectId = require('mongodb').ObjectId
 const Razorpay = require('razorpay');
 const { uid } = require('uid')
 require('dotenv').config()
-// var instance = new Razorpay({
-//     key_id: process.env.RAZORPAY_KEY_ID,
-//     key_secret: process.env.RAZORPAY_KEY_SECRET,
-// });
 
-// const paypal = require('paypal-rest-sdk');
-// paypal.configure({
-//     'mode': 'sandbox', //sandbox or live
-//     'client_id': process.env.SANDBOX_ID,
-//     'client_secret': process.env.CLIENT_SECRET
-// });
 
 
 module.exports = {
@@ -41,64 +31,6 @@ module.exports = {
                     }
                 })
             }
-        })
-    },
-
-    applyReferral: (referralId, userID) => {
-        return new Promise(async (resolve, reject) => {
-            let existingUser = await db.get().collection(collection.USER_COLLECTION).findOne({ referralId: referralId })// check if any user have the referral id
-            if (existingUser) {
-                let newUser = await db.get().collection(collection.USER_COLLECTION).findOne({ _id: objectId(userID) })
-                const transactionNewUser = {
-                    date: new Date(),
-                    title: "Referral Code",
-                    transaction: "Rs.500 credited through referral code",
-                    amount: 500,
-                    user: existingUser.UserName
-                }
-                const transactionReferredUser = {
-                    date: new Date(),
-                    title: "Referral Code",
-                    transaction: "Rs.1000 credited by using your referral code",
-                    amount: 1000,
-                    user: newUser.UserName
-                }
-                if (referralId == existingUser.referralId) {
-                    let updateNewUser = await db.get().collection(collection.USER_COLLECTION).updateOne({ _id: objectId(userID) }, {
-                        $inc: { walletBalance: 500 },
-                        $push: {
-                            walletTransaction: transactionNewUser
-                        }
-                    })
-                    let updateExistingUser = await db.get().collection(collection.USER_COLLECTION).updateOne({ referralId: referralId }, {
-                        $inc: { walletBalance: 1000 },
-                        $push: {
-                            walletTransaction: transactionReferredUser
-                        }
-                    })
-                    resolve({ status: true })
-                }
-            } else {
-                resolve({ status: false })
-            }
-        })
-
-    },
-    getWallet: (userId) => {
-        return new Promise(async (resolve, reject) => {
-            const user = await db.get().collection(collection.USER_COLLECTION)
-                .findOne({ _id: objectId(userId) })
-
-            let cartDetails = user.walletTransaction
-            cartDetails?.forEach(cartDetails => {
-                cartDetails.date = new Date(cartDetails.date).toLocaleDateString()
-            })
-            const wallet = {
-                walletBalance: user.walletBalance,
-                walletTransaction: cartDetails
-            }
-            resolve(wallet)
-
         })
     },
     addNewAddress: (address, userId) => {
@@ -533,8 +465,8 @@ module.exports = {
 
         })
     },
-    getCartProductsWithOffer: (userId, total, couponApplied) => {
-        couponApplied = parseInt(couponApplied)
+    getCartProductsWithOffer: (userId, total) => {
+        // couponApplied = parseInt(couponApplied)
         let cartTotal = parseInt(total)
         return new Promise(async (resolve, reject) => {   // bellow - get the product id from the cart of the user and get details of the product in a single querry
             let total = await db.get().collection(collection.CART_COLLECTION)
@@ -572,16 +504,16 @@ module.exports = {
                             item: 1, quantity: 1,size:1, product: 1, productTotal: { $sum: { $multiply: ['$quantity', '$product.offerPrice'] } }
                         }
                     },
-                    {
-                        $project: {
-                            item: 1, quantity: 1,size:1, product: 1, productTotal: 1, applicableCouponDiscount: { $round: [{ $multiply: [{ $divide: ['$productTotal', cartTotal] }, couponApplied] }] }
-                        }
-                    },
-                    {
-                        $project: {
-                            item: 1, quantity: 1,size:1, product: 1, productTotal: 1, applicableCouponDiscount: 1, productNetTotal: { $subtract: ["$productTotal", "$applicableCouponDiscount"] }
-                        }
-                    }
+                    // {
+                    //     $project: {
+                    //         item: 1, quantity: 1,size:1, product: 1, productTotal: 1, applicableCouponDiscount: { $round: [{ $multiply: [{ $divide: ['$productTotal', cartTotal] }, couponApplied] }] }
+                    //     }
+                    // },
+                    // {
+                    //     $project: {
+                    //         item: 1, quantity: 1,size:1, product: 1, productTotal: 1, applicableCouponDiscount: 1, productNetTotal: { $subtract: ["$productTotal", "$applicableCouponDiscount"] }
+                    //     }
+                    // }
 
 
                 ]).toArray()
@@ -685,7 +617,7 @@ module.exports = {
             resolve(cart.products)
         })
     },
-    placeOrder: (order, products, cartDetails, total, couponApplied) => {
+    placeOrder: (order, products, cartDetails, total) => {
         return new Promise((resolve, reject) => {
             db.get().collection(collection.ORDER_COLLECTION).deleteMany({ 'cartDetails.status': "Pending" })
             let status = order.payment_method === 'COD' ? 'Placed' : 'Pending';
@@ -710,8 +642,7 @@ module.exports = {
                 products: products,
                 cartDetails: cartDetails,
                 totalAmount: total,
-                couponApplied: couponApplied,
-                netAmountPaid: (total - couponApplied)
+                netAmountPaid: total
             }
             db.get().collection(collection.ORDER_COLLECTION).insertOne(orderObj).then((response) => {
                 resolve(response.insertedId)
@@ -844,18 +775,6 @@ module.exports = {
                     }
                 ]).toArray()
             resolve(products)
-        })
-    },
-    generateRazorpay: (orderID, total) => {
-        return new Promise((resolve, reject) => {
-            var options = {
-                amount: total * 100,  // amount in the smallest currency unit
-                currency: "INR",
-                receipt: '' + orderID  //to get receipt from razorpay we concatenate string to get it as a string
-            };
-            instance.orders.create(options, function (err, order) {
-                resolve(order)
-            });
         })
     },
     verifyPayment: (details) => {

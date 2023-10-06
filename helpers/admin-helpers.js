@@ -227,7 +227,7 @@ module.exports = {
                             quantity: '$cartDetails.quantity',
                             salesTotal: '$cartDetails.productTotal',
                             item: "$cartDetails.product.title",
-                            actualPrice: '$cartDetails.product.costPrice',
+                            actualPrice: '$cartDetails.product.MRP',
 
                             profit: { $subtract: ["$salesTotal", { $multiply: ['$quantity', '$actualPrice'] }] }
                         }
@@ -246,7 +246,9 @@ module.exports = {
                         }
                     }
                 ]).toArray()
+                console.log("?????????????????????",salesReport);
             resolve(salesReport)
+           
 
         })
 

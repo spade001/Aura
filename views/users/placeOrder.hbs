@@ -228,40 +228,14 @@
                                 </div>
                                 <div class="payment-method">
                                     <div class="pay-top sin-payment">
-                                        {{!-- checked="checked" --}}
+                        
                                         <input id="payment-method-3" class="input-radio" type="radio" value="COD"
-                                            name="payment_method" required>
-                                        <label for="payment-method-3">Cash on delivery </label>
-                                        <div class="payment-box payment_method_bacs">
-                                            <p>Pay cash Only on Delivery.</p>
-                                        </div>
-                                    </div>
-                                    <div class="pay-top sin-payment">
-                                        <input id="payment_method_1" class="input-radio" type="radio" value="ONLINE"
-                                            name="payment_method">
-                                        <label for="payment_method_1"> Online Payment </label>
-                                        <img alt=""
-                                                src="assets/images/icon-img/razorpay.png" width="80" >
-                                        <div class="payment-box payment_method_bacs">
-                                            <p>Make your payment directly into our bank account. Please use your Order
-                                                ID as
-                                                the payment reference.</p>
-                                        </div>
-                                    </div>
-                                    {{!-- <div class="pay-top sin-payment sin-payment-3">
-                                        <input id="payment-method-4" class="input-radio" type="radio" value="PAYPAL"
-                                            name="payment_method">
-                                        <label for="payment-method-4">PayPal <img alt=""
-                                                src="assets/images/icon-img/payment.png"><a href="#">What is
-                                                PayPal?</a></label>
-                                        <div class="payment-box payment_method_bacs">
-                                            <p>Paypal</p>
-                                        </div>
-                                    </div> --}}
+                                            name="payment_method" checked>
+                                        <label for="payment-method-3" >Cash on delivery </label>
+                                    </div>    
                                 </div>
                             </div>
                             <div class="Place-order">
-                                {{!-- <a href="/viewAll">Place Order</a> --}}
                                 <button class="btn btn-outline-danger " type="submit">Place Order</button>
                             </div>
                         </div>
@@ -298,80 +272,7 @@
                 if (response.codSuccess) {
                     location.href = '/orderSuccess/' + response.orderId
                 }
-                else if (response.razor) {
-                    
-                    razorpayPayment(response)
-                }
-                {{!-- else if (response.payPal) {
-                    console.log(response)
-                    location.replace(response.linkto)
-                } --}}
             }
         })
     })
-
-
-    function razorpayPayment(order) {
-        
-        
-        console.log("*******************************************order in function")
-        console.log(order)
-        var options = {
-            "key": "rzp_test_IsLNHEQ2MGIHsd", // Enter the Key ID generated from the Dashboard
-            "amount": order.amount, // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
-            "currency": "INR",
-            "name": "Aura",
-            "description": "Test Transaction",
-            "image": "https://example.com/your_logo",
-            "order_id": order.id, //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
-            "handler": function (response) {
-                verifyPayment(response, order)          //aftergetting these ids and signature pass it to ajax with order 
-            },
-            "modal": {
-                "ondismiss": function () {
-                    
-                    window.location.replace(order.RAZORPAY_FAIL_PAGE+order.receipt);
-                   // window.location.replace("https://Aura.gq/paymentFailed/"+order.receipt);
-                }
-            },
-            "prefill": {
-                "name": order.UserName,
-                "email":  order.UserEmail,
-                "contact":  order.MobileNo
-            },
-            "notes": {
-                "address": "Razorpay Corporate Office"
-            },
-            "theme": {
-                "color": "#3399cc"
-            }
-        };
-
-        var rzp1 = new Razorpay(options);
-        rzp1.open();
-    }
-
-    function verifyPayment(payment, order) {
-        $.ajax({
-            url: '/verify-payment',
-            data: {
-                payment,
-                order
-            },
-            method: 'post',
-            success: (response) => {
-                if (response.status) {
-                    location.href = '/orderSuccess/' + response.orderId
-                } else {
-                    alert('Payment Failed')
-                }
-            }
-        })
-    }
-
-
-
-
-
-
 </script>

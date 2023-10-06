@@ -31,10 +31,11 @@
                             {{#each productDetails}}
                             <tr>
                                 <td class="product-thumbnail">
-                                    <a href="#"><img src="/images/product-img/{{products.image1}}" width="150"
+                                    <a href="/details/{{products._id}}"><img src="/images/product-img/{{products.image1}}" width="150"
                                             alt=""></a>
                                 </td>
-                                <td class="product-name text-left"><a href="#">{{products.titleMain}} </a>
+                                <td class="product-name ">
+                                    <a href="/details/{{products._id}}">{{products.titleMain}} </a>
                                     <p>MRP:{{products.MRP}} <br>Discount: {{products.totalDiscount}}%</p>
                                 </td>
                                 <td class="product-price-cart"><span class="amount">{{products.offerPrice}}</span></td>
@@ -59,10 +60,10 @@
                     {{#each productDetails}}
                     <div  style="height: 200px; ">
                         <div class=" col-4 float-left">
-                            <a href="#"><img src="/images/product-img/{{products.image1}}" width="100" alt=""></a>
+                            <a href="/details/{{products._id}}"><img src="/images/product-img/{{products.image1}}" width="100" alt=""></a>
                         </div>
                         <div class="col-8 float-right">
-                            <a class="font-weight-bold" href="#">{{products.title}}</a>
+                            <a class="font-weight-bold" href="/details/{{products._id}}">{{products.title}}</a>
 
                             <p>MRP:{{products.MRP}} {{products.totalDiscount}}% Off <br>Offer Price:
                                 {{products.offerPrice}}</p>

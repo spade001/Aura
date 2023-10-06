@@ -3,7 +3,7 @@ var router = express.Router();
 const userHelpers = require('../helpers/user-helpers')
 require('dotenv').config()
 const {
-  getLoginRegisterPage, getLogin, logOut, getOtpLogin, enterOtpPage, verifyMobileNumber, SignUpPage, postSignUp, login, landingPage, viewAllProducts, viewAllByCategory, viewAll_ByPriceRange, viewAllProducts_verifiedUser, productDetails,
+  getLoginRegisterPage, getLogin, logOut, SignUpPage, postSignUp, login, landingPage, viewAllProducts, viewAllByCategory, viewAll_ByPriceRange, viewAllProducts_verifiedUser, productDetails,
   productDetails_verifiedUser, userAccount, getAddAddressPage, addNewAddress, getEditAddressPage, getAddressDetails, updateAddress, deleteAddress,
   updateProfile, viewCartPage, addToCart, viewWishlist, addToWishList, removeFromWishlist, addToCart_Wishlist, changeProductQty, removeCartProduct,
   proceedToCheckOut, placeOrder, getPaymentFailedPage, verifyPayment, clearCart, orderSuccessPage, viewOrders, viewOrderDetails, cancelOrder, returnOrder, searchBar,orderSeperatePage, errorPage
@@ -26,10 +26,6 @@ router.get('/login-register', verifyUser, getLoginRegisterPage);
 router.get('/login', getLogin);
 router.post('/logIn', login)
 router.get('/logOut', logOut);
-// router.get('/otpLogin', getOtpLogin);
-// router.post('/enterOtp', verifyMobileNumber)
-// router.get('/otpVerify', enterOtpPage); // if mobile number not matched with the DB
-// router.post('/verifyOtp', verifyOTP);
 router.get('/signUp', SignUpPage);
 router.post('/signUp', postSignUp)
 
